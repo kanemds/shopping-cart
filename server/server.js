@@ -1,9 +1,11 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
+const routes = require('./api/routes')
 require('dotenv').config()
 
 const app = express()
-
+app.set("view engine", "ejs")
 const URL = process.env.HOST_MONGODB
 const PORT = process.env.LOCAL_HOST || 4321
 
@@ -22,6 +24,7 @@ mongoose
     console.log(error.message)
   )
 
-app.get('/', (req, res) => {
-  res.send('testing')
-})
+app.use(express.json({ limit: '30mb', extended: true }))
+app.use(express.urlencoded({ limit: '30mb', extended: true }))
+app.use(cors())
+app.use('/', routes)
