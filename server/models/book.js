@@ -8,6 +8,10 @@ const bookSchema = new mongoose.Schema({
     // Buffer: allow store img data type 
     data: Buffer,
     contentType: String
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 })
 
