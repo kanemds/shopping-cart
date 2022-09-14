@@ -24,7 +24,8 @@ mongoose
     console.log(error.message)
   )
 
-app.use(express.json({ limit: '30mb', extended: true }))
-app.use(express.urlencoded({ limit: '30mb', extended: true }))
+app.use(express.json({ limit: '10mb', extended: true }))
+app.use(express.urlencoded({ limit: '10mb', extended: true }))
 app.use(cors())
+app.use(express.static('public'));
 app.use('/', routes)
