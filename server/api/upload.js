@@ -14,7 +14,7 @@ const imgstorage = multer.diskStorage({
   filename: (req, file, cb) => {
     console.log(req.file)
     // date first incase same file name
-    cb(null, `${file.fieldname}-${Date.now()}`)
+    cb(null, `${file.originalname}-${Date.now()}`)
   }
 })
 
@@ -43,11 +43,11 @@ router.post('/', upload.single('image'), (req, res) => {
   const product = {
     name: req.body.name,
     desc: req.body.desc,
-    img: req.file.filename
-    // img: {
-    //   data: fs.readFileSync(path.join(__dirname + '../../images/' + req.file.filename)),
-    //   contentType: 'image/jpg'
-    // }
+    price: req.body.price,
+    img: {
+      data: fs.readFileSync(path.join(__dirname + '../../images/' + req.file.filename)),
+      contentType: 'image/jpg'
+    }
   }
   Books.create(product, (error, item) => {
     if (error) {

@@ -11,25 +11,29 @@
 
 <body>
   <h1>Products</h1>
-  <%= items %>
-    <div>
-      <% for (const image of items) { %>
+  <a href="http://localhost:6001/upload">add more</a>
+  <div>
+    <% for (const image of items) { %>
+      <div class="container">
         <div>
-          <div>
-            <img src="data:image/<%=image.img.contentType%>;base64,
+          <img src="data:image/<%=image.img.contentType%>;base64,
                  <%=image.img.data.toString('base64')%>">
-            <div>
-              <h5>
-                <%= image.name %>
-              </h5>
-              <p>
-                <%= image.desc %>
-              </p>
-            </div>
-          </div>
         </div>
-        <% } %>
-    </div>
+        <div class="info">
+          <h3>
+            <%= image.name %>
+          </h3>
+          <h4>
+            $<%= image.price %>
+          </h4>
+          <br />
+          <p>
+            <%= image.desc %>
+          </p>
+        </div>
+      </div>
+      <% } %>
+  </div>
 
 </body>
 
