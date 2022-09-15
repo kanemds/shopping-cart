@@ -1,6 +1,8 @@
 const Books = require('../models/book')
 
 
+
+
 const getRequest = (req, res) => {
   Books.find({}, (err, items) => {
     if (err) {
@@ -13,13 +15,7 @@ const getRequest = (req, res) => {
   });
 }
 
-const postRequest = async (req, res) => {
-  try {
-
-  } catch (error) {
-
-  }
-}
 
 
-module.exports = { getRequest, postRequest }
+
+module.exports = { getRequest }
