@@ -3,7 +3,7 @@ const Books = require('../models/book')
 const fs = require('fs');
 
 
-const getRequest = async (req, res) => {
+const getRequest = (req, res) => {
   try {
     res.status(201).render('create')
   } catch (error) {
