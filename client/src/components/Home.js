@@ -1,9 +1,15 @@
 import React from 'react'
 import { useGetAllProductsQuery } from '../features/productsApi'
 import { Box, Card, CardContent, CardMedia, Typography, CardActionArea, Button } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../features/cartSlice'
 
 const Home = () => {
   const { data, error, isLoading } = useGetAllProductsQuery()
+  const dispatch = useDispatch()
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product))
+  }
 
   return (
     <>
@@ -17,7 +23,7 @@ const Home = () => {
             const image = window.URL.createObjectURL(blob);
 
             return (
-              < Card key={product.id} sx={{ maxWidth: 345, display: 'flex' }
+              < Card key={product._id} sx={{ maxWidth: 345, display: 'flex', m: 2, p: 2 }
               }>
                 <Box>
                   <CardActionArea>
@@ -43,7 +49,7 @@ const Home = () => {
                       </Typography>
                     </CardContent>
                   </CardActionArea>
-                  <Button>Add to Cart</Button>
+                  <Button onClick={() => handleAddToCart(product)}>Add to Cart</Button>
                 </Box>
               </Card>
             )
