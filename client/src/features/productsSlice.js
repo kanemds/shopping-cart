@@ -4,16 +4,19 @@ import axios from "axios"
 
 const initialState = {
   items: [],
-  status: null
+  status: null,
+
 }
 
 export const getProducts = createAsyncThunk(
   "product/getProducts",
   async () => {
-    const response = await axios.get("http://localhost:6001/")
-    console.log('abc')
-    console.log(response.data)
-    return response?.data
+    try {
+      const response = await axios.get("http://localhost:6001/")
+      return response?.data
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 )
 
