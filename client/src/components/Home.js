@@ -3,12 +3,16 @@ import { useGetAllProductsQuery } from '../features/productsApi'
 import { Box, Card, CardContent, CardMedia, Typography, CardActionArea, Button } from '@mui/material'
 import { useDispatch } from 'react-redux'
 import { addToCart } from '../features/cartSlice'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
   const { data, error, isLoading } = useGetAllProductsQuery()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
   const handleAddToCart = (product) => {
     dispatch(addToCart(product))
+    navigate('/cart')
   }
 
   return (
