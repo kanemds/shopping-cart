@@ -1,33 +1,42 @@
 <!DOCTYPE html>
 
 <head>
-  <title>Upload Product</title>
+  <title>Edit Product</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
-  <h1>Product Upload</h1>
-  <form method="POST" action="/upload" enctype="multipart/form-data">
-    <div>
-      <label for="name">Product Name</label>
-      <input type="text" placeholder="Product Name" name="name" required>
-    </div>
-    <div>
-      <label for="desc">Product Description</label>
-      <textarea name="desc" rows="3" placeholder="Description" required>
-      </textarea>
-    </div>
-    <div>
-      <label for="price">Product Price</label>
-      <input type="number" placeholder="Product Price" name="price" required>
-    </div>
-    <div>
-      <label for="image">Uplaod Image</label>
-      <input type="file" name="image" required />
+  <h1>Edit Product</h1>
+  <form method="POST" action="/edit/<%=image.id%>?_method=PUT" enctype="multipart/form-data">
+    <div class="container">
+      <div>
+        <img src="data:image/<%=image.img.contentType%>;base64,
+             <%=image.img.data.toString('base64')%>">
+      </div>
+      <div class="info">
+        <div>
+          <label for="name">Product Name</label>
+          <input type="text" placeholder="Product Name" value="<%=image.name%>" name="name" required>
+        </div>
+        <div>
+          <label for="desc">Product Description</label>
+          <textarea name="desc" rows="3" placeholder="Description" required><%=image.desc%>
+        </textarea>
+        </div>
+        <div>
+          <label for="price">Product Price</label>
+          <input type="number" placeholder="Product Price" name="price" value="<%=image.price %>" required>
+        </div>
+        <div>
+          <label for="image">Uplaod Image</label>
+          <input type="file" name="image" required />
 
-    </div>
-    <div>
-      <button type="submit">Submit </button>
-      <button><a href="http://localhost:6001/">Cancel</a></button>
+        </div>
+        <div>
+          <button type="submit">Submit </button>
+          <button><a href="http://localhost:6001/">Cancel</a></button>
+        </div>
+      </div>
     </div>
   </form>
 </body>

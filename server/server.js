@@ -2,6 +2,9 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const routes = require('./api/routes')
+const methodOverride = require('method-override')
+
+
 require('dotenv').config()
 
 const app = express()
@@ -28,4 +31,5 @@ app.use(express.json({ limit: '10mb', extended: true }))
 app.use(express.urlencoded({ limit: '10mb', extended: true }))
 app.use(cors())
 app.use(express.static('public'));
+app.use(methodOverride('_method'))
 app.use('/', routes)

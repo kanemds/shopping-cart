@@ -32,7 +32,9 @@
           </p>
 
           <button><a href="http://localhost:6001/edit/<%=image._id%>">Edit</a></button>
-
+          <form action="http://localhost:6001/edit/<%=image._id%>?_method=DELETE" method="POST">
+            <button type="submit">Delete</button>
+          </form>
         </div>
       </div>
       <% } %>
