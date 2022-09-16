@@ -9,6 +9,6 @@ const store = configureStore({
   }
 })
 
-store.dispatch(getProducts)
+store.dispatch(getProducts())
 
 export default store

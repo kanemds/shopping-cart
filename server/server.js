@@ -10,7 +10,7 @@ require('dotenv').config()
 const app = express()
 app.set("view engine", "ejs")
 const URL = process.env.HOST_MONGODB
-const PORT = process.env.LOCAL_HOST || 4321
+const PORT = process.env.LOCAL_HOST
 
 mongoose
   .connect(URL, {
