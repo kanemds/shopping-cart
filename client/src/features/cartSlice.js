@@ -36,10 +36,39 @@ const cartSlice = createSlice({
       toast.error(` ${action.payload.name} has been removed`, {
         position: "bottom-left"
       })
+    },
+    decreaseCartItem(state, action) {
+      const currentItem = state.cartItems.findIndex(
+        cartItem => cartItem._id === action.payload._id
+      )
+
+      if (state.cartItems[currentItem].cartQuantity > 1) {
+        state.cartItems[currentItem].cartQuantity -= 1
+      } else if (
+        state.cartItems[currentItem].cartQuantity === 1
+      ) {
+        const remainItems = state.cartItems.filter(cartItem => cartItem._id !== action.payload._id)
+        state.cartItems = remainItems
+
+        toast.error(` ${action.payload.name} has been removed`, {
+          position: "bottom-left"
+        })
+      }
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
+    },
+    increaseCartItem(state, action) {
+      const currentItem = state.cartItems.findIndex(
+        cartItem => cartItem._id === action.payload._id
+      )
+
+      if (state.cartItems[currentItem].cartQuantity >= 1) {
+        state.cartItems[currentItem].cartQuantity += 1
+      }
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
     }
   }
 })
 
-export const { addToCart, removeCartItem } = cartSlice.actions
+export const { addToCart, removeCartItem, decreaseCartItem, increaseCartItem } = cartSlice.actions
 
 export default cartSlice.reducer

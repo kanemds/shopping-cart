@@ -4,15 +4,23 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { removeCartItem } from '../features/cartSlice';
+import { decreaseCartItem, removeCartItem, increaseCartItem } from '../features/cartSlice';
 
 const Cart = () => {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
   console.log(cart)
 
-  const handleremoveCartItem = (item) => {
+  const handleRemoveCartItem = (item) => {
     dispatch(removeCartItem(item))
+  }
+
+  const handleDecreaseCartItem = (item) => {
+    dispatch(decreaseCartItem(item))
+  }
+
+  const handleIncreaseCartItem = (item) => {
+    dispatch(increaseCartItem(item))
   }
 
   return (
@@ -61,18 +69,18 @@ const Cart = () => {
                           />
                           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', ml: 5 }}>
                             <Typography>{row.name}</Typography>
-                            <Button size='small' onClick={() => handleremoveCartItem(row)}>remove Item</Button>
+                            <Button size='small' onClick={() => handleRemoveCartItem(row)}>remove Item</Button>
                           </Box>
 
                         </Box>
                       </TableCell>
                       <TableCell align="center">$ {row.price <= 0 ? 0 : row.price.toFixed(2)}</TableCell>
                       <TableCell align="center">
-                        <IconButton aria-label="remove" size="small" color="primary">
+                        <IconButton aria-label="remove" size="small" color="primary" onClick={() => handleDecreaseCartItem(row)} >
                           <RemoveIcon fontSize="inherit" />
                         </IconButton>
                         {row.cartQuantity}
-                        <IconButton aria-label="add" size="small" color="primary">
+                        <IconButton aria-label="add" size="small" color="primary" onClick={() => handleIncreaseCartItem(row)}>
                           <AddIcon fontSize="inherit" />
                         </IconButton>
                       </TableCell>
@@ -94,7 +102,8 @@ const Cart = () => {
           </TableContainer>
 
         </Box>
-      )}
+      )
+      }
     </>
   )
 }
