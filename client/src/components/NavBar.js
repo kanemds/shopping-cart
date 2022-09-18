@@ -84,7 +84,9 @@ const NavBar = () => {
 
           <IconButton variant="rounded" size="small" aria-label="item" color="inherit" sx={{ mr: 1, ml: 3 }}>
             <Badge badgeContent={4} color="error">
-              <ShoppingCartIcon />
+              <Link to='/cart'>
+                <ShoppingCartIcon />
+              </Link>
             </Badge>
           </IconButton>
 
