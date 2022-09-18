@@ -1,9 +1,10 @@
 import React from 'react'
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
-import { AppBar, Box, Toolbar, IconButton, Typography, InputBase, Avatar, MenuItem, Badge } from '@mui/material'
+import { AppBar, Box, Toolbar, IconButton, Typography, InputBase, Avatar, Badge } from '@mui/material'
 import { Link } from "react-router-dom"
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useSelector } from 'react-redux';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -49,6 +50,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 const NavBar = () => {
+
+  const { cartTotalQuantity } = useSelector(state => state.cart)
+
   return (
     <div> <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -83,8 +87,8 @@ const NavBar = () => {
           </Search>
 
           <IconButton variant="rounded" size="small" aria-label="item" color="inherit" sx={{ mr: 1, ml: 3 }}>
-            <Badge badgeContent={4} color="error">
-              <Link to='/cart'>
+            <Badge badgeContent={cartTotalQuantity} color="error">
+              <Link to='/cart' style={{ textDecoration: 'none', color: 'white' }}>
                 <ShoppingCartIcon />
               </Link>
             </Badge>

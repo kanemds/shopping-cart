@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CardMedia, Button, IconButton } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { decreaseCartItem, removeCartItem, increaseCartItem } from '../features/cartSlice';
+import { decreaseCartItem, removeCartItem, increaseCartItem, getTotal } from '../features/cartSlice';
 
 const Cart = () => {
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
   console.log(cart)
+
+  useEffect(() => {
+    dispatch(getTotal())
+  }, [cart, dispatch])
 
   const handleRemoveCartItem = (item) => {
     dispatch(removeCartItem(item))
@@ -29,7 +33,7 @@ const Cart = () => {
       {cart.cartItems.length <= 0 ? (
         <Box sx={{ minHeight: '80%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
           <Typography>Your cart is currently empty</Typography>
-          <Link to='/'><Typography>Start-Shopping</Typography> </Link>
+          <Link to='/' style={{ textDecoration: 'none', color: 'grey' }}><Typography>Start-Shopping</Typography> </Link>
         </Box>
       ) : (
         <Box sx={{
@@ -94,7 +98,7 @@ const Cart = () => {
             <Box>
 
               <Button>Check Out</Button>
-              <Typography>Total: $</Typography>
+              <Typography>Total: ${(cart.cartTotalAmount).toFixed(2)}</Typography>
 
               <Typography>Taxes ans Shipping fee will show at checkout</Typography>
               <Link to='/'>Keep Shopping</Link>
