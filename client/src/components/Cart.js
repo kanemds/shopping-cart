@@ -57,6 +57,11 @@ const Cart = () => {
                       <TableCell align="right">{row.price}</TableCell>
                       <TableCell align="right">{row.cartQuantity}</TableCell>
                       <TableCell align="right">{row.price * row.cartQuantity}</TableCell>
+
+                      <Button>+</Button>
+                      <Button>-</Button>
+
+
                     </TableRow>
                   )
                 }
