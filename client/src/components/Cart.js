@@ -1,11 +1,13 @@
 import React from 'react'
-import { Box, Typography, Card, TablePagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CardMedia } from '@mui/material'
+import { Box, Typography, Card, TablePagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CardMedia, Button, IconButton } from '@mui/material'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart)
-  console.log(cart)
+
   return (
     <>
       <Typography>Shopping Cart</Typography>
@@ -28,9 +30,9 @@ const Cart = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>Product</TableCell>
-                  <TableCell align="right">Price</TableCell>
-                  <TableCell align="right">Quantity</TableCell>
-                  <TableCell align="right">Total</TableCell>
+                  <TableCell align="center">Price</TableCell>
+                  <TableCell align="center">Quantity</TableCell>
+                  <TableCell align="center">Total</TableCell>
 
                 </TableRow>
               </TableHead>
@@ -41,7 +43,9 @@ const Cart = () => {
                   return (
                     <TableRow
                       key={row._id}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      sx={{
+                        '&:last-child td, &:last-child th': { border: 0 }
+                      }}
                     >
                       <TableCell component="th" scope="row">
                         <Box sx={{ display: 'flex', alignContent: 'center' }}>
@@ -51,24 +55,36 @@ const Cart = () => {
                             image={image}
                             alt={row.name}
                           />
-                          <Typography>{row.name}</Typography>
+                          <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', ml: 5 }}>
+                            <Typography>{row.name}</Typography>
+                            <Button size='small'>Remove</Button>
+                          </Box>
+
                         </Box>
                       </TableCell>
-                      <TableCell align="right">{row.price}</TableCell>
-                      <TableCell align="right">{row.cartQuantity}</TableCell>
-                      <TableCell align="right">{row.price * row.cartQuantity}</TableCell>
-
-                      <Button>+</Button>
-                      <Button>-</Button>
-
-
+                      <TableCell align="center">$ {row.price <= 0 ? 0 : row.price.toFixed(2)}</TableCell>
+                      <TableCell align="center">
+                        <IconButton aria-label="delete" size="small" color="primary">
+                          <RemoveIcon fontSize="inherit" />
+                        </IconButton>
+                        {row.cartQuantity}
+                        <IconButton aria-label="add" size="small" color="primary">
+                          <AddIcon fontSize="inherit" />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell align="center">${row.price * row.cartQuantity <= 0 ? 0 : (row.price * row.cartQuantity).toFixed(2)}</TableCell>
                     </TableRow>
                   )
                 }
                 )}
               </TableBody>
             </Table>
+            <Box>
+              <Button>Check Out</Button>
+              <Typography>Total: $</Typography>
+            </Box>
           </TableContainer>
+
         </Box>
       )}
     </>
