@@ -1,18 +1,25 @@
 import React from 'react'
-import { Box, Typography, Card, TablePagination, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CardMedia, Button, IconButton } from '@mui/material'
-import { useSelector } from 'react-redux'
+import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CardMedia, Button, IconButton } from '@mui/material'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { removeCartItem } from '../features/cartSlice';
 
 const Cart = () => {
+  const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
+  console.log(cart)
+
+  const handleremoveCartItem = (item) => {
+    dispatch(removeCartItem(item))
+  }
 
   return (
     <>
-      <Typography>Shopping Cart</Typography>
-      {cart.cartItems.length === 0 ? (
-        <Box>
+
+      {cart.cartItems.length <= 0 ? (
+        <Box sx={{ minHeight: '80%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignContent: 'center' }}>
           <Typography>Your cart is currently empty</Typography>
           <Link to='/'><Typography>Start-Shopping</Typography> </Link>
         </Box>
@@ -43,9 +50,6 @@ const Cart = () => {
                   return (
                     <TableRow
                       key={row._id}
-                      sx={{
-                        '&:last-child td, &:last-child th': { border: 0 }
-                      }}
                     >
                       <TableCell component="th" scope="row">
                         <Box sx={{ display: 'flex', alignContent: 'center' }}>
@@ -57,14 +61,14 @@ const Cart = () => {
                           />
                           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', ml: 5 }}>
                             <Typography>{row.name}</Typography>
-                            <Button size='small'>Remove</Button>
+                            <Button size='small' onClick={() => handleremoveCartItem(row)}>remove Item</Button>
                           </Box>
 
                         </Box>
                       </TableCell>
                       <TableCell align="center">$ {row.price <= 0 ? 0 : row.price.toFixed(2)}</TableCell>
                       <TableCell align="center">
-                        <IconButton aria-label="delete" size="small" color="primary">
+                        <IconButton aria-label="remove" size="small" color="primary">
                           <RemoveIcon fontSize="inherit" />
                         </IconButton>
                         {row.cartQuantity}
@@ -80,8 +84,12 @@ const Cart = () => {
               </TableBody>
             </Table>
             <Box>
+
               <Button>Check Out</Button>
               <Typography>Total: $</Typography>
+
+              <Typography>Taxes ans Shipping fee will show at checkout</Typography>
+              <Link to='/'>Keep Shopping</Link>
             </Box>
           </TableContainer>
 

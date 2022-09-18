@@ -28,10 +28,18 @@ const cartSlice = createSlice({
         })
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
+    },
+    removeCartItem(state, action) {
+      const remainItems = state.cartItems.filter(cartItem => cartItem._id !== action.payload._id)
+      state.cartItems = remainItems
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems))
+      toast.error(` ${action.payload.name} has been removed`, {
+        position: "bottom-left"
+      })
     }
   }
 })
 
-export const { addToCart } = cartSlice.actions
+export const { addToCart, removeCartItem } = cartSlice.actions
 
 export default cartSlice.reducer
