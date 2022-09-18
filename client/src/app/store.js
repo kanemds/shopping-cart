@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 import productsReducer, { getProducts } from '../features/productsSlice'
 import { productsApi } from '../features/productsApi'
-import cartReducer from '../features/cartSlice'
+import cartReducer, { getTotal } from '../features/cartSlice'
 
 
 const store = configureStore({
@@ -16,5 +16,6 @@ const store = configureStore({
 })
 
 store.dispatch(getProducts())
+store.dispatch(getTotal())
 
 export default store
