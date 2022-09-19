@@ -10,7 +10,7 @@ const register = require('./toClient/register')
 router.use('/upload', upload)
 router.use('/edit', edit)
 router.use('/products', allProducts)
-router.use('register', register)
+router.use('/register', register)
 
 // client
 router.use('/', showProducts)

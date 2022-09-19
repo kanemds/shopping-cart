@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const bcrypt = require('bcrypt')
-const joi = require('joi')
+const { postRequest } = require('../../controller/toClient/registerController')
+
+router.post('register', postRequest)
 
 
 module.exports = router
