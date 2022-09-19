@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { getRequest, putRequest } = require('../../controller/editController')
+const { getRequest, putRequest } = require('../../controller/toServer/editController')
 const multer = require('multer')
 
 
