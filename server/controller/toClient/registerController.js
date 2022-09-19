@@ -1,6 +1,8 @@
 const User = require('../../models/user')
 const bcrypt = require('bcrypt')
 const joi = require('joi')
+const jwtToken = require('../../api/toClient/jwtToken')
+
 
 const postRequest = async (req, res) => {
   const registerUser = joi.object({
@@ -28,7 +30,11 @@ const postRequest = async (req, res) => {
 
   user.password = await bcrypt.hash(user.password, salt)
 
-  await user.save()
+  user = await user.save()
+
+  const token = jwtToken(user)
+
+  res.json(token)
 }
 
 module.exports = { postRequest }
