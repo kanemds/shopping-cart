@@ -1,4 +1,4 @@
-const Books = require('../models/book')
+const Books = require('../../models/book')
 const fs = require('fs')
 const path = require('path')
 
@@ -27,7 +27,7 @@ const putRequest = async (req, res) => {
       }
     })
     res.status(201).json(updateBooks)
-    res.redirect('/')
+    res.redirect('/products')
   } catch (error) {
     console.log(error.message)
     res.status(500).json(error.message)

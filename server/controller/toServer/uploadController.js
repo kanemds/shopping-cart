@@ -1,5 +1,5 @@
 const path = require('path');
-const Books = require('../models/book')
+const Books = require('../../models/book')
 const fs = require('fs');
 
 
@@ -18,7 +18,7 @@ const postRequest = (req, res) => {
     desc: req.body.desc,
     price: req.body.price,
     img: {
-      data: fs.readFileSync(path.join(__dirname + '../../images/' + req.file.filename)),
+      data: fs.readFileSync(path.join(__dirname + '../../../images/' + req.file.filename)),
       contentType: 'image/jpg'
     }
   }
@@ -26,7 +26,7 @@ const postRequest = (req, res) => {
     if (error) {
       console.log(error)
     } else {
-      res.redirect('/')
+      res.redirect('/products')
     }
   })
 }
