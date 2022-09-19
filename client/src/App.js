@@ -6,6 +6,7 @@ import NavBar from './components/NavBar';
 import NotFound from './components/NotFound'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import Register from './components/auth/Register';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/' element={<Home />} />
-
+          <Route path='register' element={<Register />} />
         </Routes>
 
       </Router>

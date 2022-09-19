@@ -6,8 +6,8 @@ import { addToCart } from '../features/cartSlice'
 import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
-  const auth = useSelector(state => state.auth)
-  console.log(auth)
+
+
   const { data, error, isLoading } = useGetAllProductsQuery()
   const dispatch = useDispatch()
   const navigate = useNavigate()
