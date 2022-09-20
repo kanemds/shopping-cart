@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import productsReducer, { getProducts } from '../features/productsSlice'
 import { productsApi } from '../features/productsApi'
 import cartReducer, { getTotal } from '../features/cartSlice'
-import authReducer from '../features/authSlice'
+import authReducer, { loadUser } from '../features/authSlice'
 
 
 const store = configureStore({
@@ -19,5 +19,7 @@ const store = configureStore({
 
 store.dispatch(getProducts())
 store.dispatch(getTotal())
+store.dispatch(loadUser(null))
+
 
 export default store
