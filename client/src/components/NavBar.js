@@ -52,6 +52,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const NavBar = () => {
 
   const { cartTotalQuantity } = useSelector(state => state.cart)
+  const auth = useSelector(state => state.auth)
 
   return (
     <div> <Box sx={{ flexGrow: 1 }}>
@@ -62,7 +63,7 @@ const NavBar = () => {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            sx={{ mr: 2 }}
+
           >
             <Link to='/'>
               <Avatar variant="rounded" src='/photo/logo.png' />
@@ -72,21 +73,28 @@ const NavBar = () => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            sx={{ mr: 3 }}
           >
             Book Store
           </Typography>
-          <Search>
+          <Search
+            sx={{ flexGrow: 1 }}
+          >
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
-              placeholder="Search…"
+              placeholder="Happy Reading"
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-
-          <IconButton variant="rounded" size="small" aria-label="item" color="inherit" sx={{ mr: 1, ml: 3 }}>
+          {auth._id ? <Typography sx={{ ml: 3 }} >Logout</Typography> :
+            <Box sx={{ display: 'flex' }}>
+              <Typography sx={{ mr: 1, ml: 1 }}><Link to='/login' style={{ textDecoration: 'none', color: 'white' }}>Login</Link></Typography>
+              <Typography sx={{ mr: 1, ml: 1 }}><Link to='/register' style={{ textDecoration: 'none', color: 'white' }}>Register</Link></Typography>
+            </Box>
+          }
+          <IconButton variant="rounded" size="small" aria-label="item" color="inherit" sx={{ mr: 3, ml: 3 }}>
             <Badge badgeContent={cartTotalQuantity} color="error">
               <Link to='/cart' style={{ textDecoration: 'none', color: 'white' }}>
                 <ShoppingCartIcon />
