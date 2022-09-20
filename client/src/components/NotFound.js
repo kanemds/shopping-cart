@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 const NotFound = () => {
   return (
@@ -10,8 +11,10 @@ const NotFound = () => {
       justifyContent: 'center',
       alignItems: 'center',
     }}>
-      <h1>Error- 404 </h1>
-      <h2>Page Not Found</h2>
+      <Typography variant='h5'>Error 404</Typography>
+      <Typography variant='h5'>Page Not Found</Typography>
+      <br />
+      <Typography variant='h7'><Link to='/' style={{ textDecoration: 'none', color: 'grey' }} > Back to Home Page</Link></Typography>
     </Box>
 
 

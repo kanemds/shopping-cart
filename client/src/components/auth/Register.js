@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, TextField, Typography, Button } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../../features/authSlice'
@@ -15,6 +15,12 @@ const Register = () => {
     password: ""
   })
 
+  useEffect(() => {
+    if (auth._id) {
+      navigate('/')
+    }
+  }, [auth._id, navigate])
+
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(registerUser(user))
@@ -24,7 +30,9 @@ const Register = () => {
     <>
       <Box sx={{ width: '100vw', height: '70vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
         <Typography>Register</Typography>
-
+        {auth.registerStatus === "rejected" ? (
+          <Typography color='red'>{auth.registerError}</Typography>
+        ) : null}
         <Box sx={{ maxWidth: 600, width: '100%', display: 'flex', flexDirection: 'column', m: 2 }}>
           <TextField sx={{ m: 1 }} label="Name"
             value={user.name}
@@ -33,14 +41,16 @@ const Register = () => {
           <TextField sx={{ m: 1 }} label="Email"
             value={user.email}
             onChange={e => setUser({ ...user, email: e.target.value })}></TextField>
-          <TextField sx={{ m: 1 }} label="Password"
+          <TextField sx={{ m: 1 }} label="Password" type='password'
             value={user.password}
             onChange={e => setUser({ ...user, password: e.target.value })}></TextField>
-          <TextField sx={{ m: 1 }} label="Password Comfirm" ></TextField>
+          <TextField sx={{ m: 1 }} label="Password Comfirm" type='password'></TextField>
         </Box>
         <Box>
           <Button onClick={() => navigate('/')}>Back</Button>
-          <Button onClick={handleSubmit}>Register</Button>
+          <Button onClick={handleSubmit}> {auth.registerStatus === "pending" ? (
+            <Typography>"Submitting"</Typography>
+          ) : "Register"}</Button>
         </Box>
       </Box>
     </>
