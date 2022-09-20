@@ -21,7 +21,7 @@ const Home = () => {
     <>
       {isLoading ? <Typography>Loading...</Typography> : error ? <Typography>Error Occured</Typography> : (
         <Box>
-          <Typography variant='h3'>New Arrivals</Typography>
+
           {data?.map(product => {
 
             // conver bindata from mongodb image
