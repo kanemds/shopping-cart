@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react'
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CardMedia, Button, IconButton } from '@mui/material'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { decreaseCartItem, removeCartItem, increaseCartItem, getTotal } from '../features/cartSlice';
 
 const Cart = () => {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
+  const auth = useSelector((state) => state.auth)
   console.log(cart)
 
   useEffect(() => {
@@ -39,7 +41,6 @@ const Cart = () => {
         <Box sx={{
           display: 'flex',
           justifyContent: 'center'
-
         }}>
           <TableContainer component={Paper} sx={{
             maxWidth: '90%',
@@ -96,8 +97,11 @@ const Cart = () => {
               </TableBody>
             </Table>
             <Box>
+              {auth._id ?
+                <Button>Check Out</Button> :
+                <Button onClick={() => navigate('/login')}>Login to Check out</Button>
+              }
 
-              <Button>Check Out</Button>
               <Typography>Total: ${(cart.cartTotalAmount).toFixed(2)}</Typography>
 
               <Typography>Taxes ans Shipping fee will show at checkout</Typography>

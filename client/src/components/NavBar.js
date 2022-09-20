@@ -4,7 +4,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import { AppBar, Box, Toolbar, IconButton, Typography, InputBase, Avatar, Badge } from '@mui/material'
 import { Link } from "react-router-dom"
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser } from '../features/authSlice';
+import { toast } from 'react-toastify';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -50,7 +52,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 const NavBar = () => {
-
+  const dispatch = useDispatch()
   const { cartTotalQuantity } = useSelector(state => state.cart)
   const auth = useSelector(state => state.auth)
 
@@ -88,7 +90,14 @@ const NavBar = () => {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
-          {auth._id ? <Typography sx={{ ml: 3 }} >Logout</Typography> :
+          {auth._id ?
+            <Typography sx={{ ml: 3 }}>
+              <Link to='/' style={{ textDecoration: 'none', color: 'white' }} onClick={() => {
+                dispatch(logoutUser(null))
+                toast.warning("Logged Out", { position: "bottom-left" })
+              }}>
+
+                Logout</Link></Typography> :
             <Box sx={{ display: 'flex' }}>
               <Typography sx={{ mr: 1, ml: 1 }}><Link to='/login' style={{ textDecoration: 'none', color: 'white' }}>Login</Link></Typography>
               <Typography sx={{ mr: 1, ml: 1 }}><Link to='/register' style={{ textDecoration: 'none', color: 'white' }}>Register</Link></Typography>
@@ -105,7 +114,7 @@ const NavBar = () => {
 
         </Toolbar>
       </AppBar>
-    </Box></div>
+    </Box></div >
   )
 }
 
