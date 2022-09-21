@@ -12,7 +12,7 @@ const stripe = require('./toServer/stripe')
 router.use('/upload', upload)
 router.use('/edit', edit)
 router.use('/products', allProducts)
-router.use('payment', stripe)
+router.use('/stripe', stripe)
 
 // client
 router.use('/', showProducts)
