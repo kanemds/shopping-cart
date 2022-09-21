@@ -17,23 +17,23 @@ const getRequest = (req, res) => {
 
 const putRequest = async (req, res) => {
   try {
-    const updateBooks = await Books.findByIdAndUpdate(req.params.id, {
+    await Books.findOneAndUpdate(req.params._id, {
       name: req.body.name,
       desc: req.body.name,
       price: req.body.price,
       img: {
-        data: fs.readFileSync(path.join(__dirname + '../../images/' + req.file.filename)),
+        data: fs.readFileSync(path.join(__dirname + '../../../images/' + req.file.filename)),
         contentType: 'image/jpg'
-      }
+      },
+      new: true
     })
-    res.status(201).json(updateBooks)
     res.redirect('/products')
+
   } catch (error) {
     console.log(error.message)
-    res.status(500).json(error.message)
+    res.status(400).json(error.message)
   }
 }
-
 
 
 

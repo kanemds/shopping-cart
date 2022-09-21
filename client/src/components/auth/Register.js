@@ -17,7 +17,7 @@ const Register = () => {
 
   useEffect(() => {
     if (auth._id) {
-      navigate('/')
+      navigate(-1)
     }
   }, [auth._id, navigate])
 
