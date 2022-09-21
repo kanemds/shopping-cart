@@ -5,13 +5,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { decreaseCartItem, removeCartItem, increaseCartItem, getTotal } from '../features/cartSlice';
+import PayButton from './PayButton';
 
 const Cart = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
   const auth = useSelector((state) => state.auth)
-  console.log(cart)
 
   useEffect(() => {
     dispatch(getTotal())
@@ -98,7 +98,7 @@ const Cart = () => {
             </Table>
             <Box>
               {auth._id ?
-                <Button>Check Out</Button> :
+                <PayButton cartItems={cart.cartItems} /> :
                 <Button onClick={() => navigate('/login')}>Login to Check out</Button>
               }
 

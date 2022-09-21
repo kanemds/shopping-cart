@@ -16,7 +16,8 @@ const Login = () => {
 
   useEffect(() => {
     if (auth._id) {
-      navigate('/')
+      // back to previous page after login
+      navigate(-1)
     }
   }, [auth._id, navigate])
 
