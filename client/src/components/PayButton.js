@@ -8,6 +8,8 @@ const PayButton = ({ cartItems }) => {
 
   const user = useSelector((state => state.auth))
 
+  console.log(user._id)
+
   const handleCheckout = () => {
     axios.post(`${api}/stripe/create-checkout-session`, {
       cartItems,
