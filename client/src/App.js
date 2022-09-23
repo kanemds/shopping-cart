@@ -9,6 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import CheckoutSuccess from './components/CheckoutSuccess';
+import Dashboard from './components/admin/Dashboard';
+import Products from './components/admin/Products';
+import Summary from './components/admin/Summary';
 
 function App() {
   return (
@@ -22,8 +25,12 @@ function App() {
           <Route path='/cart' element={<Cart />} />
           <Route path='/checkout-success' element={<CheckoutSuccess />} />
           <Route path='/' element={<Home />} />
-          <Route path='register' element={<Register />} />
-          <Route path='login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/admin' element={<Dashboard />} >
+            <Route path='products' element={<Products />} />
+            <Route path='summary' element={<Summary />} />
+          </Route>
         </Routes>
 
       </Router>

@@ -8,14 +8,15 @@ const { Blob } = require('buffer')
 
 router.post('/create-checkout-session', async (req, res) => {
 
-  console.log(req.body.user)
-  const customer = await stripe.customers.create({
-    metadata: {
-      userId: req.body._id,
+  console.log(req.body)
+  console.log(req.body.cartItems[0].img)
+  // const customer = await stripe.customers.create({
+  //   metadata: {
+  //     userId: req.body.userId,
 
-      cart: JSON.stringify(req.body.cartItems)
-    }
-  })
+  //     cart: JSON.stringify(req.body.cartItems)
+  //   }
+  // })
 
   const line_items = req.body.cartItems.map(product => {
     // console.log(product)
@@ -88,7 +89,7 @@ router.post('/create-checkout-session', async (req, res) => {
         }
       },
     ],
-    customer: customer._id,
+    // customer: customer._id,
     line_items,
     phone_number_collection: {
       enabled: true,
