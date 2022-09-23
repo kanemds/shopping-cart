@@ -13,6 +13,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import NavBar from '../NavBar';
 import { Link, Outlet } from 'react-router-dom'
 
@@ -22,6 +24,9 @@ export default function Dashboard() {
 
   const styled = { textDecoration: 'none', color: 'black' }
   const listStyle = { p: 3, fontSize: '20px' }
+
+
+
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -42,8 +47,8 @@ export default function Dashboard() {
         <Box sx={{ overflow: 'auto', mt: 6 }} >
 
           <List >
-            <ListItem disablePadding fullWith>
-              <ListItemButton sx={listStyle} >
+            <ListItem disablePadding >
+              <ListItemButton sx={listStyle}>
                 <Link to='/admin' style={styled}>Dashboard</Link>
               </ListItemButton>
             </ListItem>
@@ -51,7 +56,8 @@ export default function Dashboard() {
               <ListItemButton sx={listStyle}>
                 <Link to='/admin/summary' style={styled}>Summary</Link>
               </ListItemButton>
-            </ListItem> <ListItem disablePadding>
+            </ListItem>
+            <ListItem disablePadding>
               <ListItemButton sx={listStyle}>
                 <Link to='/admin/products' style={styled}>Product</Link>
               </ListItemButton>
