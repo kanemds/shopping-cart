@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Box, Button, Typography, TextField, FormControl, InputLabel, InputAdornment, OutlinedInput, CardMedia, Card } from '@mui/material'
 
 import storage from "../../firebase"
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage"
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 
 const CreateProduct = () => {
 
   // store the image in state then upload to firebase
   const [image, setImage] = useState(null)
-  const [imageList, setImageList] = useState([])
-  const imageListRef = ref(storage, 'producs/')
+  const [imageList, setImageList] = useState("")
 
   const handleUpload = (e) => {
     if (setImage == null) return
     // path
     const fileName = new Date().getTime() + image.name
+
     const imageRef = ref(storage, `products/${fileName}`)
     uploadBytes(imageRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then(url => {
@@ -23,20 +23,10 @@ const CreateProduct = () => {
     })
   }
 
-  useEffect(() => {
-    listAll(imageListRef).then(res => {
-      res.items.forEach(item => {
-        getDownloadURL(item).then(url => {
-          setImageList(url)
-        }
-        )
-      })
-    })
-  })
+
 
   return (
     <>
-
       <Box>
         <Typography>Product</Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
