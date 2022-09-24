@@ -8,22 +8,43 @@ const CreateProduct = () => {
 
   // store the image in state then upload to firebase
   const [image, setImage] = useState(null)
-  const [imageList, setImageList] = useState("")
 
-  const handleUpload = (e) => {
-    if (setImage == null) return
-    // path
-    const fileName = new Date().getTime() + image.name
 
-    const imageRef = ref(storage, `products/${fileName}`)
-    uploadBytes(imageRef, image).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then(url => {
-        setImageList(url)
-      })
-    })
+  // const [imageList, setImageList] = useState("")
+
+  // const handleUpload = (e) => {
+  //   if (setImage == null) return
+  //   // path
+  //   const fileName = new Date().getTime() + image.name
+
+  //   const imageRef = ref(storage, `products/${fileName}`)
+  //   uploadBytes(imageRef, image).then((snapshot) => {
+  //     getDownloadURL(snapshot.ref).then(url => {
+  //       setImageList(url)
+  //     })
+  //   })
+  // }
+
+
+  // transfer img data and display
+  const TransferImageData = file => {
+    const reader = new FileReader()
+
+    if (file) {
+      reader.readAsDataURL(file)
+      reader.onloadend = () => {
+        setImage(reader.result)
+      }
+    } else {
+      setImage(null)
+    }
   }
 
+  const handleProductImage = e => {
+    const file = e.target.files[0]
 
+    TransferImageData(file)
+  }
 
   return (
     <>
@@ -42,30 +63,33 @@ const CreateProduct = () => {
                 label="Amount"
               />
             </FormControl>
-            <FormControl sx={{ m: 1 }}>
-              <OutlinedInput
-                type='file'
-                onChange={e => setImage(e.target.files[0])}
-              />
-              <Button onClick={handleUpload}>Upload</Button>
-            </FormControl>
 
+            <OutlinedInput
+              sx={{ m: 1 }}
+              type='file'
+              onChange={handleProductImage}
+            />
           </Box>
           <Box sx={{ display: 'flex', ml: 20 }}>
             <Card >
-              <CardMedia
-                component="img"
-                height="500"
-                width="400"
-                image={imageList}
-                alt="Product Image"
-              />
-
+              {image ?
+                <CardMedia
+                  component="img"
+                  height="500"
+                  width="400"
+                  image={image}
+                  alt="Product Image"
+                />
+                :
+                <Box sx={{ width: 400, height: 500, display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
+                  <Typography variant='h4'> Preview Product Image</Typography>
+                </Box>
+              }
             </Card>
           </Box>
         </Box>
         <Button>Create</Button>
-      </Box>
+      </Box >
     </>
   )
 }
