@@ -1,29 +1,25 @@
 import React, { useState } from 'react'
 import { Box, Button, Typography, TextField, FormControl, InputLabel, InputAdornment, OutlinedInput, CardMedia, Card } from '@mui/material'
-
+import { useDispatch } from 'react-redux'
 import storage from "../../firebase"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import { createProduct } from '../../features/productsSlice'
+import { async } from '@firebase/util'
 
 const CreateProduct = () => {
 
+  const dispatch = useDispatch()
+
   // store the image in state then upload to firebase
   const [image, setImage] = useState(null)
+  const [imageUpload, setImageUpload] = useState(null)
+  const [name, setName] = useState("")
+  const [author, setAuthor] = useState("")
+  const [desc, setDesc] = useState("")
+  const [price, setPrice] = useState("")
 
 
-  // const [imageList, setImageList] = useState("")
 
-  // const handleUpload = (e) => {
-  //   if (setImage == null) return
-  //   // path
-  //   const fileName = new Date().getTime() + image.name
-
-  //   const imageRef = ref(storage, `products/${fileName}`)
-  //   uploadBytes(imageRef, image).then((snapshot) => {
-  //     getDownloadURL(snapshot.ref).then(url => {
-  //       setImageList(url)
-  //     })
-  //   })
-  // }
 
 
   // transfer img data and display
@@ -40,11 +36,46 @@ const CreateProduct = () => {
     }
   }
 
+
+
   const handleProductImage = e => {
     const file = e.target.files[0]
-
     TransferImageData(file)
   }
+
+  const handleUpload = (e) => {
+    // path
+    const fileName = new Date().getTime() + image.name
+
+    const imageRef = ref(storage, `products/${fileName}`)
+    uploadBytes(imageRef, image).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then(url => {
+        setImageUpload(url)
+      })
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const fileName = new Date().getTime() + imageUpload.name
+    const imageRef = ref(storage, `products/${fileName}`)
+    uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then(url => {
+        dispatch(createProduct({
+          name,
+          author,
+          desc,
+          price,
+          img: url
+        }))
+      })
+
+    })
+  }
+
+  console.log(image)
+  console.log(imageUpload)
 
   return (
     <>
@@ -52,14 +83,26 @@ const CreateProduct = () => {
         <Typography>Product</Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Box sx={{ maxWidth: 600, width: '100%', display: 'flex', flexDirection: 'column', m: 2 }}>
-            <TextField label="Name" sx={{ m: 1 }}>Name</TextField>
-            <TextField label="Author" sx={{ m: 1 }}>Author</TextField>
-            <TextField label="Description" sx={{ m: 1 }} multiline rows={6}>Description</TextField>
+            <TextField label="Name" sx={{ m: 1 }} required
+              value={name}
+              onChange={e => setName(e.target.value)}
+            >Name</TextField>
+            <TextField label="Author" sx={{ m: 1 }} required
+              value={author}
+              onChange={e => setAuthor(e.target.value)}
+            >Author</TextField>
+            <TextField label="Description" sx={{ m: 1 }} multiline rows={6} required
+              value={desc}
+              onChange={e => setDesc(e.target.value)}
+            >Description</TextField>
             <FormControl sx={{ m: 1 }}>
-              <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-amount" >Amount</InputLabel>
               <OutlinedInput
+                value={price}
+                onChange={e => setPrice(e.target.value)}
                 type='number'
-                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                startAdornment={<InputAdornment position="start" required
+                >$</InputAdornment>}
                 label="Amount"
               />
             </FormControl>
@@ -67,7 +110,7 @@ const CreateProduct = () => {
             <OutlinedInput
               sx={{ m: 1 }}
               type='file'
-              onChange={handleProductImage}
+              onChange={e => { handleProductImage(e); setImageUpload(e.target.files[0]) }}
             />
           </Box>
           <Box sx={{ display: 'flex', ml: 20 }}>
@@ -88,8 +131,12 @@ const CreateProduct = () => {
             </Card>
           </Box>
         </Box>
-        <Button>Create</Button>
+        <Button onClick={handleSubmit}>Create</Button>
       </Box >
+      {name}
+      {author}
+      {desc}
+      {price}
     </>
   )
 }
