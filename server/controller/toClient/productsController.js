@@ -1,11 +1,11 @@
 const Product = require('../../models/product')
 
 const postRequest = async (req, res) => {
-  const { name, author, desc, img } = req.body
+  const { name, author, desc, price, img } = req.body
 
   try {
     const product = new Product({
-      name, author, desc, img
+      name, author, desc, price, img
     })
 
     const saveProduct = await product.save()

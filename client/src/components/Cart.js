@@ -53,13 +53,10 @@ const Cart = () => {
                   <TableCell align="center">Price</TableCell>
                   <TableCell align="center">Quantity</TableCell>
                   <TableCell align="center">Total</TableCell>
-
                 </TableRow>
               </TableHead>
               <TableBody>
                 {cart.cartItems.map((row) => {
-                  const blob = new Blob([Int8Array.from(row.img.data.data)], { type: row.img.contentType })
-                  const image = window.URL.createObjectURL(blob);
                   return (
                     <TableRow
                       key={row._id}
@@ -69,7 +66,7 @@ const Cart = () => {
                           <CardMedia
                             sx={{ width: 80, height: 120 }}
                             component="img"
-                            image={image}
+                            image={row.img}
                             alt={row.name}
                           />
                           <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', ml: 5 }}>

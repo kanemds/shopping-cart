@@ -14,7 +14,7 @@ export const getProducts = createAsyncThunk(
   "product/getProducts",
   async () => {
     try {
-      const response = await axios.get("http://localhost:6001/")
+      const response = await axios.get(`${api}/product`)
       return response?.data
     } catch (error) {
       console.log(error.message)
@@ -25,7 +25,6 @@ export const getProducts = createAsyncThunk(
 export const createProduct = createAsyncThunk(
   "product/createProduct",
   async (values) => {
-    console.log(values)
     try {
       const response = await axios.post(`${api}/product`, values)
       return response?.data
@@ -49,8 +48,9 @@ const productsSlice = createSlice({
       state.status = "pending"
     },
     [getProducts.fulfilled]: (state, action) => {
-      state.status = "success"
       state.items = action.payload
+      state.status = "success"
+
     },
     [getProducts.rejected]: (state, action) => {
       state.status = "rejected"
@@ -61,7 +61,7 @@ const productsSlice = createSlice({
     [createProduct.fulfilled]: (state, action) => {
       state.items.push(action.payload)
       state.createStatus = "success"
-
+      toast.success('Product Created')
     },
     [createProduct.rejected]: (state, action) => {
       state.createStatus = "rejected"
