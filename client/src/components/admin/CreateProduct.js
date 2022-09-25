@@ -16,7 +16,7 @@ const CreateProduct = () => {
   const [name, setName] = useState("")
   const [author, setAuthor] = useState("")
   const [desc, setDesc] = useState("")
-  const [price, setPrice] = useState("")
+  const [price, setPrice] = useState(0)
 
 
 
@@ -43,17 +43,6 @@ const CreateProduct = () => {
     TransferImageData(file)
   }
 
-  const handleUpload = (e) => {
-    // path
-    const fileName = new Date().getTime() + image.name
-
-    const imageRef = ref(storage, `products/${fileName}`)
-    uploadBytes(imageRef, image).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then(url => {
-        setImageUpload(url)
-      })
-    })
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -74,8 +63,6 @@ const CreateProduct = () => {
     })
   }
 
-  console.log(image)
-  console.log(imageUpload)
 
   return (
     <>

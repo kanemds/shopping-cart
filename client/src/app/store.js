@@ -17,6 +17,7 @@ const store = configureStore({
   }
 })
 
+
 store.dispatch(getProducts())
 store.dispatch(getTotal())
 store.dispatch(loadUser(null))
