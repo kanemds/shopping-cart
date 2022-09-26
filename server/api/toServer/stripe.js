@@ -9,7 +9,6 @@ const Order = require('../../models/order')
 
 router.post('/create-checkout-session', async (req, res) => {
 
-  console.log(req.body)
 
   const customer = await stripe.customers.create({
     metadata: {
@@ -85,7 +84,7 @@ router.post('/create-checkout-session', async (req, res) => {
         }
       },
     ],
-    customer: customer._id,
+    customer: customer.id,
     line_items,
     phone_number_collection: {
       enabled: true,
@@ -103,6 +102,9 @@ router.post('/create-checkout-session', async (req, res) => {
 
 const createOrder = async (customer, data, lineItems) => {
 
+  console.log(customer)
+
+
   const newOrder = new Order({
     userId: customer.metadata.userId,
     customerId: data.customer,
@@ -113,6 +115,8 @@ const createOrder = async (customer, data, lineItems) => {
     shipping: data.customer_details,
     payment_status: data.payment_status
   })
+
+
 
   try {
     const saveOrder = await newOrder.save()
@@ -127,16 +131,18 @@ const createOrder = async (customer, data, lineItems) => {
 
 
 // This is your Stripe CLI webhook secret for testing your endpoint locally.
-let endpointSecret
 
-endpointSecret = "whsec_65e8f8b578a932eca74d3fdc345c353fd2f6b3f618006a739c2fd47c5c3ca13f";
+
+
 
 
 router.post('/webhook', express.raw({ type: 'application/json' }), (req, response) => {
+  const endpointSecret = "whsec_65e8f8b578a932eca74d3fdc345c353fd2f6b3f618006a739c2fd47c5c3ca13f";
   const sig = req.headers['stripe-signature'];
 
   let data
   let eventType
+
 
   if (endpointSecret) {
     let event;
@@ -152,29 +158,30 @@ router.post('/webhook', express.raw({ type: 'application/json' }), (req, respons
 
     data = event.data.object
     eventType = event.type
+
   } else {
     data = req.body.data.object
     eventType = req.body.type
   }
   // Handle the event
   if (eventType === "checkout.session.completed") {
-    stripe.customers.retrieve(data.customer).then(
-      (customer) => {
-        stripe.checkout.sessioins.listLineItems(
-          data.id, {},
-          function (error, lineItems) {
-            console.log("LineItem", lineItems)
-            createOrder(customer, data, lineItems)
-          }
-        )
-
-      }
-    )
+    stripe.customers
+      .retrieve(data.customer)
+      .then(
+        (customer) => {
+          stripe.checkout.sessions.listLineItems(
+            data.id, {},
+            function (error, lineItems) {
+              createOrder(customer, data, lineItems)
+            }
+          )
+        }
+      )
       .catch(error => console.log(error.message))
   }
 
   // Return a 200 response to acknowledge receipt of the event
-  response.send().end();
+  response.send()
 });
 
 
