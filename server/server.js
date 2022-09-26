@@ -27,9 +27,20 @@ mongoose
     console.log(error.message)
   )
 
-app.use(express.json({ limit: '10mb', extended: true }))
-app.use(express.urlencoded({ limit: '10mb', extended: true }))
 app.use(cors())
+app.use(express.urlencoded({ limit: '10mb', extended: true }))
+
+// Use JSON parser for all non-webhook routes
+app.use((req, res, next) => {
+  if (req.originalUrl === '/stripe/webhook') {
+    next();
+  } else {
+    // express.json({ limit: '10mb', extended: true });
+    express.json()(req, res, next);
+  }
+});
+
 app.use(express.static('public'));
 app.use(methodOverride('_method'))
+
 app.use('/', routes)
