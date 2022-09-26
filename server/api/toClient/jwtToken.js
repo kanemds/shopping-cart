@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-// require('dotenv').config()
+require('dotenv').config()
 
 const jwtToken = (user) => {
 
@@ -8,7 +8,8 @@ const jwtToken = (user) => {
   const token = jwt.sign({
     _id: user._id,
     name: user.name,
-    email: user.email
+    email: user.email,
+    isAdmin: user.isAdmin
   }, key)
 
   return token
