@@ -61,7 +61,7 @@ const productsSlice = createSlice({
     [createProduct.fulfilled]: (state, action) => {
       state.items.push(action.payload)
       state.createStatus = "success"
-      toast.success('Product Created')
+
     },
     [createProduct.rejected]: (state, action) => {
       state.createStatus = "rejected"
