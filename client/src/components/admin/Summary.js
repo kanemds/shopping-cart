@@ -22,8 +22,11 @@ const Summary = () => {
           </Box>
 
           <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: 2, mb: 2 }}>
+
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <GroupsIcon fontSize='large' sx={{ color: "rgba(230, 255, 110, 0.9)" }} />
+              <Box sx={{ backgroundColor: "rgba(35, 177, 3, 0.3)", borderRadius: .7 }}>
+                <GroupsIcon fontSize='large' />
+              </Box>
               <Box>
                 <Typography>50</Typography>
                 <Typography>Users</Typography>
@@ -32,7 +35,9 @@ const Summary = () => {
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <LocalMallIcon fontSize='large' />
+              <Box sx={{ backgroundColor: "rgba(244, 255, 0, 0.3)", borderRadius: .7 }}>
+                <LocalMallIcon fontSize='large' />
+              </Box>
               <Box>
                 <Typography>50</Typography>
                 <Typography>Orders</Typography>
@@ -41,7 +46,9 @@ const Summary = () => {
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <MonetizationOnIcon fontSize='large' />
+              <Box sx={{ backgroundColor: "rgba(8, 212, 226, 0.3)", borderRadius: .7 }}>
+                <MonetizationOnIcon fontSize='large' />
+              </Box>
               <Box>
                 <Typography>50</Typography>
                 <Typography>Users</Typography>
