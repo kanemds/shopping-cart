@@ -8,6 +8,7 @@ const register = require('./toClient/register')
 const login = require('./toClient/login')
 const stripe = require('./toServer/stripe')
 const products = require('./toClient/products')
+const user = require('./toClient/user')
 
 // server
 router.use('/upload', upload)
@@ -20,5 +21,6 @@ router.use('/', showProducts)
 router.use('/register', register)
 router.use('/login', login)
 router.use('/product', products)
+router.use('/states', user)
 
 module.exports = router
