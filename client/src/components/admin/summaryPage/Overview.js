@@ -109,7 +109,7 @@ const Overview = () => {
               <MonetizationOnIcon fontSize='large' />
             </Box>
             <Box sx={{ ml: 1 }}>
-              <Typography variant='h5'>${earnings[0]?.total ? earnings[0].total.toLocaleString() : ""}</Typography>
+              <Typography variant='h5'>${earnings[0]?.total ? (earnings[0].total.toFixed(2) / 100).toLocaleString() : ""}</Typography>
               <Typography>Earnings</Typography>
             </Box>
             {
