@@ -9,24 +9,38 @@ import { api, setHeaders } from '../../features/api';
 const Summary = () => {
 
   const [users, setUsers] = useState([])
-  const [userPercent, setUserPercent] = useState(0)
+  const [usersPercent, setUsersPercent] = useState(0)
 
 
-  console.log(userPercent)
+
+  const [orders, setOrders] = useState([])
+  const [ordersPercent, setOrdersPercent] = useState(0)
+  console.log(orders)
 
   useEffect(() => {
-
-    const fetchData = async () => {
+    const usersData = async () => {
       try {
-        const res = await axios.get(`${api}/user`, setHeaders)
+        const res = await axios.get(`${api}/user`, setHeaders())
         setUsers(res.data)
-        setUserPercent(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100)
+        setUsersPercent(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100)
       } catch (error) {
         console.log(error)
       }
     }
+    usersData()
+  }, [])
 
-    fetchData()
+  useEffect(() => {
+    const ordersData = async () => {
+      try {
+        const res = await axios.get(`${api}/order`, setHeaders())
+        setOrders(res.data)
+        setOrdersPercent(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    ordersData()
   }, [])
 
   return (
@@ -39,6 +53,8 @@ const Summary = () => {
 
         <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: 2, mb: 2 }}>
 
+
+          {/* user */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', backgroundColor: "rgba(35, 177, 3, 0.5)", borderRadius: .7, p: 1 }}>
               <GroupsIcon fontSize='large' />
@@ -48,22 +64,29 @@ const Summary = () => {
               <Typography>Users</Typography>
             </Box>
             {
-              userPercent >= 0 ? <Typography sx={{ ml: 1, color: 'green' }}>{userPercent}%</Typography> :
-                <Typography variant='h6' sx={{ ml: 1, color: 'red' }}>{userPercent}%</Typography>
+              usersPercent >= 0 ? <Typography sx={{ ml: 1, color: 'green' }}>{usersPercent}%</Typography> :
+                <Typography variant='h6' sx={{ ml: 1, color: 'red' }}>{usersPercent}%</Typography>
             }
           </Box>
 
+
+          {/* order */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', backgroundColor: "rgba(244, 255, 0, 0.5)", borderRadius: .7, p: 1 }}>
               <LocalMallIcon fontSize='large' />
             </Box>
             <Box sx={{ ml: 1 }}>
-              <Typography variant='h5'>50</Typography>
+              <Typography variant='h5'>{orders[0]?.total}</Typography>
               <Typography>Orders</Typography>
             </Box>
-            <Typography variant='h6' sx={{ ml: 1 }}>50%</Typography>
+            {
+              ordersPercent >= 0 ? <Typography sx={{ ml: 1, color: 'green' }}>{ordersPercent}%</Typography> :
+                <Typography variant='h6' sx={{ ml: 1, color: 'red' }}>{ordersPercent}%</Typography>
+            }
           </Box>
 
+
+          {/* earnings */}
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', backgroundColor: "rgba(8, 212, 226, 0.3)", borderRadius: .7, p: 1 }}>
               <MonetizationOnIcon fontSize='large' />
@@ -74,6 +97,7 @@ const Summary = () => {
             </Box>
             <Typography variant='h6' sx={{ ml: 1 }}>50%</Typography>
           </Box>
+
 
         </Box>
       </Paper>
