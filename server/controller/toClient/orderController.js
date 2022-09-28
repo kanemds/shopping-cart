@@ -39,7 +39,6 @@ const getRequest = async (req, res) => {
   } catch (error) {
     res.status(500).json(error.message)
   }
-
 }
 
 const getEarningRequest = async (req, res) => {
@@ -81,7 +80,47 @@ const getEarningRequest = async (req, res) => {
   } catch (error) {
     res.status(500).json(error.message)
   }
-
 }
 
-module.exports = { getRequest, getEarningRequest }
+const getWeeklyRequest = async (req, res) => {
+
+  const last7Days = moment()
+    .day(moment().day() - 7)
+    .format("YYYY-MM-DD HH:mm:ss")
+
+  try {
+    const weeklySales = await Order.aggregate([
+      {
+        $match: { createdAt: { $gte: new Date(last7Days) } }
+      },
+      {
+        $project: {
+          //dayOfWeek sun-sat 1 -7
+          dayOfYear: { $dayOfYear: "$createdAt" },
+          dayOfWeek: { $dayOfWeek: "$createdAt" },
+          sales: "$total"
+        }
+      },
+      {
+        $group: {
+          _id: {
+            "dayInYear": "$dayOfYear",
+            "dayInWeek": "$dayOfWeek",
+          },
+
+          total: { $sum: "$sales" }
+
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      }
+    ])
+    console.log(weeklySales)
+    res.status(200).json(weeklySales)
+  } catch (error) {
+    res.status(500).json(error.message)
+  }
+}
+
+module.exports = { getRequest, getEarningRequest, getWeeklyRequest }

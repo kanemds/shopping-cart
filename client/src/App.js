@@ -11,8 +11,9 @@ import Login from './components/auth/Login';
 import CheckoutSuccess from './components/CheckoutSuccess';
 import Dashboard from './components/admin/Dashboard';
 import Products from './components/admin/Products';
-import Summary from './components/admin/Summary';
+
 import CreateProduct from './components/admin/CreateProduct';
+import Summary from './components/admin/summaryPage/Summary';
 
 function App() {
   return (
