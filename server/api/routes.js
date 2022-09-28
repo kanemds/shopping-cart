@@ -15,12 +15,12 @@ router.use('/upload', upload)
 router.use('/edit', edit)
 router.use('/products', allProducts)
 router.use('/stripe', stripe)
-
+router.use('/user', user)
 // client
-router.use('/', showProducts)
+
 router.use('/register', register)
 router.use('/login', login)
 router.use('/product', products)
-router.use('/states', user)
+router.use('/', showProducts)
 
 module.exports = router
