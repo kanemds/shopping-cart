@@ -13,7 +13,7 @@ const auth = (req, res, next) => {
 
     req.user = user
     next()
-  } catch (ex) {
+  } catch (error) {
     return res.status(401).json("Not authenticated")
   }
 }

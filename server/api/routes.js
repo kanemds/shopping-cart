@@ -9,6 +9,7 @@ const login = require('./toClient/login')
 const stripe = require('./toServer/stripe')
 const products = require('./toClient/products')
 const user = require('./toClient/user')
+const order = require('./toClient/order')
 
 // server
 router.use('/upload', upload)
@@ -16,6 +17,7 @@ router.use('/edit', edit)
 router.use('/products', allProducts)
 router.use('/stripe', stripe)
 router.use('/user', user)
+router.use('/order', order)
 // client
 
 router.use('/register', register)
