@@ -38,7 +38,7 @@ const Chart = () => {
 
   return (
     <Box>
-      <Typography>Last 7 days earnings</Typography>
+      <Typography>Last 7 days earnings (CAD)</Typography>
       <AreaChart width={730} height={250} data={report}
         margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
         <defs>

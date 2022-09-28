@@ -34,7 +34,7 @@ const Overview = () => {
   useEffect(() => {
     const ordersData = async () => {
       try {
-        const res = await axios.get(`${api}/order`, setHeaders())
+        const res = await axios.get(`${api}/orderoverview`, setHeaders())
         setOrders(res.data)
         setOrdersPercent(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100)
       } catch (error) {

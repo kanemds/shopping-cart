@@ -123,4 +123,18 @@ const getWeeklyRequest = async (req, res) => {
   }
 }
 
-module.exports = { getRequest, getEarningRequest, getWeeklyRequest }
+const getLastRequest = async (req, res) => {
+  const query = req.query.new
+
+  try {
+    const orders = query ? await Order.find().sort({ _id: -1 }).limit(4) :
+      await Order.find().sort({ _id: -1 })
+
+    res.status(200).json(orders)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error.message)
+  }
+}
+
+module.exports = { getRequest, getEarningRequest, getWeeklyRequest, getLastRequest }
