@@ -43,11 +43,7 @@ export default function Dashboard() {
         <Box sx={{ overflow: 'auto', mt: 6 }} >
 
           <List >
-            <ListItem disablePadding >
-              <ListItemButton sx={listStyle}>
-                <Link to='/admin' style={styled}>Dashboard</Link>
-              </ListItemButton>
-            </ListItem>
+
             <ListItem disablePadding>
               <ListItemButton sx={listStyle}>
                 <Link to='/admin/summary' style={styled}>Summary</Link>
@@ -55,7 +51,17 @@ export default function Dashboard() {
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton sx={listStyle}>
+                <Link to='/admin/users' style={styled}>Users</Link>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton sx={listStyle}>
                 <Link to='/admin/products' style={styled}>Product</Link>
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton sx={listStyle}>
+                <Link to='/admin/orders' style={styled}>Order</Link>
               </ListItemButton>
             </ListItem>
           </List>

@@ -26,7 +26,7 @@ const Chart = () => {
         })
 
         setReport(newReport)
-        console.log(newReport)
+
       } catch (error) {
         console.log(error)
       }
