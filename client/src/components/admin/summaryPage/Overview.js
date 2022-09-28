@@ -34,7 +34,7 @@ const Overview = () => {
   useEffect(() => {
     const ordersData = async () => {
       try {
-        const res = await axios.get(`${api}/order`, setHeaders())
+        const res = await axios.get(`${api}/orderoverview`, setHeaders())
         setOrders(res.data)
         setOrdersPercent(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100)
       } catch (error) {
@@ -109,7 +109,7 @@ const Overview = () => {
               <MonetizationOnIcon fontSize='large' />
             </Box>
             <Box sx={{ ml: 1 }}>
-              <Typography variant='h5'>${earnings[0]?.total ? earnings[0].total.toLocaleString() : ""}</Typography>
+              <Typography variant='h5'>${earnings[0]?.total ? (earnings[0].total.toFixed(2) / 100).toLocaleString() : ""}</Typography>
               <Typography>Earnings</Typography>
             </Box>
             {
