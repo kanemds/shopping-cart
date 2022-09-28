@@ -14,6 +14,9 @@ import Products from './components/admin/Products';
 
 import CreateProduct from './components/admin/CreateProduct';
 import Summary from './components/admin/summaryPage/Summary';
+import ProductsList from './components/admin/productsList/ProductsList';
+import Users from './components/admin/Users';
+import Orders from './components/admin/Orders';
 
 function App() {
   return (
@@ -30,16 +33,20 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/admin' element={<Dashboard />} >
+            <Route path='summary' element={<Summary />} />
+            <Route path='users' element={<Users />} />
             <Route path='products' element={<Products />} >
+              {/* Index Route:A child route with no path that renders in the parent's outlet at the parent's URL. */}
+              <Route index element={<ProductsList />} />
               <Route path='create-product' element={<CreateProduct />} />
             </Route>
-            <Route path='summary' element={<Summary />} />
+            <Route path='orders' element={<Orders />} />
           </Route>
         </Routes>
 
       </Router>
 
-    </div>
+    </div >
   );
 }
 

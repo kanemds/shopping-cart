@@ -38,7 +38,7 @@ const TransList = () => {
           {
             orders?.map((order, index) => {
               let bgc = (index % 2) === 0 ? "rgba(1, 40, 106, 0.8)" : "rgba(1, 40, 106, 0.2)"
-              console.log(bgc)
+
               return (
                 <Box key={index} sx={{
                   display: 'flex', backgroundColor: bgc
