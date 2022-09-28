@@ -4,23 +4,19 @@ import { Box, Paper, Typography } from '@mui/material'
 import GroupsIcon from '@mui/icons-material/Groups';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import { api, setHeaders } from '../../features/api';
+import { api, setHeaders } from '../../../features/api';
 
-const Summary = () => {
+
+const Overview = () => {
 
   const [users, setUsers] = useState([])
   const [usersPercent, setUsersPercent] = useState(0)
-
-
 
   const [orders, setOrders] = useState([])
   const [ordersPercent, setOrdersPercent] = useState(0)
 
   const [earnings, setEarnings] = useState([])
   const [earningsPercent, setEarningsPercent] = useState(0)
-
-  console.log(earnings)
-  console.log(earningsPercent)
 
   useEffect(() => {
     const usersData = async () => {
@@ -60,6 +56,9 @@ const Summary = () => {
     }
     earningsData()
   }, [])
+
+
+
 
   return (
     <Box >
@@ -110,7 +109,7 @@ const Summary = () => {
               <MonetizationOnIcon fontSize='large' />
             </Box>
             <Box sx={{ ml: 1 }}>
-              <Typography variant='h5'>${earnings[0]?.total.toLocaleString()}</Typography>
+              <Typography variant='h5'>${earnings[0]?.total ? earnings[0].total.toLocaleString() : ""}</Typography>
               <Typography>Earnings</Typography>
             </Box>
             {
@@ -122,10 +121,12 @@ const Summary = () => {
 
         </Box>
       </Paper>
+
+
     </Box>
 
 
   )
 }
 
-export default Summary
+export default Overview
