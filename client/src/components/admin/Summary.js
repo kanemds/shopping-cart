@@ -15,7 +15,12 @@ const Summary = () => {
 
   const [orders, setOrders] = useState([])
   const [ordersPercent, setOrdersPercent] = useState(0)
-  console.log(orders)
+
+  const [earnings, setEarnings] = useState([])
+  const [earningsPercent, setEarningsPercent] = useState(0)
+
+  console.log(earnings)
+  console.log(earningsPercent)
 
   useEffect(() => {
     const usersData = async () => {
@@ -41,6 +46,19 @@ const Summary = () => {
       }
     }
     ordersData()
+  }, [])
+
+  useEffect(() => {
+    const earningsData = async () => {
+      try {
+        const res = await axios.get(`${api}/order/earning`, setHeaders())
+        setEarnings(res.data)
+        setEarningsPercent(((res.data[0].total - res.data[1].total) / res.data[1].total) * 100)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    earningsData()
   }, [])
 
   return (
@@ -92,10 +110,13 @@ const Summary = () => {
               <MonetizationOnIcon fontSize='large' />
             </Box>
             <Box sx={{ ml: 1 }}>
-              <Typography variant='h5'>50</Typography>
-              <Typography>Earning</Typography>
+              <Typography variant='h5'>${earnings[0]?.total.toLocaleString()}</Typography>
+              <Typography>Earnings</Typography>
             </Box>
-            <Typography variant='h6' sx={{ ml: 1 }}>50%</Typography>
+            {
+              earningsPercent >= 0 ? <Typography sx={{ ml: 1, color: 'green' }}>{earningsPercent}%</Typography> :
+                <Typography variant='h6' sx={{ ml: 1, color: 'red' }}>{earningsPercent}%</Typography>
+            }
           </Box>
 
 
