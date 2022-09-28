@@ -1,5 +1,4 @@
 const User = require('../../models/user')
-const { auth, isUser, isAdmin } = require('../../api/middleware/auth')
 const moment = require('moment')
 
 const getRequest = async (req, res) => {
@@ -8,8 +7,6 @@ const getRequest = async (req, res) => {
     .month(moment().month() - 1)
     .set("date", 1)
     .format("YYYY-MM-DD HH:mm:ss")
-
-
 
   try {
     const user = await User.aggregate([
@@ -32,6 +29,9 @@ const getRequest = async (req, res) => {
           // calculate the total in this month
           total: { $sum: 1 }
         }
+      },
+      {
+        $sort: { _id: -1 }
       }
     ])
 
