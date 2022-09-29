@@ -2,6 +2,7 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { useSelector } from 'react-redux'
 import { CardActionArea, CardMedia, Box, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -9,8 +10,9 @@ import { CardActionArea, CardMedia, Box, Button } from '@mui/material';
 
 export default function ProductList() {
 
+  const navigate = useNavigate()
   const { items } = useSelector(state => state.products)
-  console.log(items)
+
 
   const rows = items && items.map(product => {
     return {
@@ -60,7 +62,7 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <Box>
-            <Button>View</Button>
+            <Button onClick={() => navigate(`/product/${params.row.id}`)}>View</Button>
             <Button>Edit</Button>
             <Button>Delete</Button>
           </Box>

@@ -51,6 +51,8 @@ const CreateProduct = () => {
     const imageRef = ref(storage, `products/${fileName}`)
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then(url => {
+
+        // file name console.log(snapshot.ref.name)
         dispatch(createProduct({
           name,
           author,
@@ -120,10 +122,6 @@ const CreateProduct = () => {
         </Box>
         <Button onClick={handleSubmit}>Create</Button>
       </Box >
-      {name}
-      {author}
-      {desc}
-      {price}
     </>
   )
 }
