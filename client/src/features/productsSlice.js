@@ -7,7 +7,8 @@ import { toast } from 'react-toastify'
 const initialState = {
   items: [],
   status: null,
-  createStatus: null
+  createStatus: null,
+  deleteStatus: null
 }
 
 export const getProducts = createAsyncThunk(
@@ -27,6 +28,19 @@ export const createProduct = createAsyncThunk(
   async (values) => {
     try {
       const response = await axios.post(`${api}/product`, values, setHeaders())
+      return response?.data
+    } catch (error) {
+      console.log(error.message)
+      toast.error(error.response?.data)
+    }
+  }
+)
+
+export const deleteProduct = createAsyncThunk(
+  "product/deleteProduct",
+  async (id) => {
+    try {
+      const response = await axios.delete(`${api}/product/${id}`, setHeaders())
       return response?.data
     } catch (error) {
       console.log(error.message)
@@ -65,6 +79,18 @@ const productsSlice = createSlice({
     },
     [createProduct.rejected]: (state, action) => {
       state.createStatus = "rejected"
+    },
+    [deleteProduct.pending]: (state, action) => {
+      state.deleteStatus = "pending"
+    },
+    [deleteProduct.fulfilled]: (state, action) => {
+      const newList = state.items.filter(item => item._id !== action.payload._id)
+      state.items = newList
+      state.deleteStatus = "success"
+      toast.error("Product Deleted")
+    },
+    [deleteProduct.rejected]: (state, action) => {
+      state.deleteStatus = "rejected"
     },
 
 

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { CardActionArea, CardMedia, Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom'
+import { deleteProduct } from '../../../features/productsSlice';
 
 
 
@@ -12,6 +13,11 @@ export default function ProductList() {
 
   const navigate = useNavigate()
   const { items } = useSelector(state => state.products)
+  const dispatch = useDispatch()
+
+  const handleDelete = id => {
+    dispatch(deleteProduct(id))
+  }
 
 
   const rows = items && items.map(product => {
@@ -64,7 +70,7 @@ export default function ProductList() {
           <Box>
             <Button onClick={() => navigate(`/product/${params.row.id}`)}>View</Button>
             <Button>Edit</Button>
-            <Button>Delete</Button>
+            <Button onClick={() => handleDelete(params.row.id)}>Delete</Button>
           </Box>
         )
       }
@@ -79,6 +85,7 @@ export default function ProductList() {
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
+        disableSelectionOnClick
       />
     </div>
   );
