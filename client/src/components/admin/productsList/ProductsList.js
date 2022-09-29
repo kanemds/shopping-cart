@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { CardActionArea, CardMedia, Box, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom'
 import { deleteProduct } from '../../../features/productsSlice';
+import EditProduct from '../EditProduct';
 
 
 
@@ -67,9 +68,9 @@ export default function ProductList() {
       width: 210,
       renderCell: (params) => {
         return (
-          <Box>
+          <Box sx={{ display: 'flex' }}>
             <Button onClick={() => navigate(`/product/${params.row.id}`)}>View</Button>
-            <Button>Edit</Button>
+            <EditProduct />
             <Button onClick={() => handleDelete(params.row.id)}>Delete</Button>
           </Box>
         )

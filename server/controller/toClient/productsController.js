@@ -47,8 +47,9 @@ const deleteRequest = async (req, res) => {
     if (!product) return res.status(404).json("Product not found")
 
     const url = product.img
+
+    // find object
     const fileRef = ref(storage, url)
-    console.log(fileRef)
 
     const deleted = await deleteObject(fileRef)
 
