@@ -1,9 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const { postRequest, getRequest } = require('../../controller/toClient/productsController')
+const { postRequest, getRequest, getProductByIdRequest, deleteRequest } = require('../../controller/toClient/productsController')
 const { isAdmin } = require('../middleware/auth')
 
+
 router.get('/', getRequest)
+router.get('/find/:id', getProductByIdRequest)
 router.post('/', isAdmin, postRequest)
+router.delete('/:id', deleteRequest)
+
 
 module.exports = router
