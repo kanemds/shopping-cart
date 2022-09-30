@@ -3,7 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { useSelector, useDispatch } from 'react-redux'
 import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom'
-import { ordersFetch } from '../../../features/ordersSlice';
+import { editOrder, ordersFetch } from '../../../features/ordersSlice';
 import moment from 'moment'
 
 
@@ -17,6 +17,20 @@ export default function OrderList() {
   useEffect(() => {
     dispatch(ordersFetch())
   }, [])
+
+  const handleOrderDispatched = (id) => {
+    dispatch(editOrder({
+      id,
+      delivery_status: 'dispatched'
+    }))
+  }
+
+  const handleOrderDelivered = (id) => {
+    dispatch(editOrder({
+      id,
+      delivery_status: "delivered"
+    }))
+  }
 
 
   const rows = lists && lists.map(order => {
@@ -66,8 +80,8 @@ export default function OrderList() {
       renderCell: (params) => {
         return (
           <Box>
-            <Button>Dispatch</Button>
-            <Button>Delivered</Button>
+            <Button onClick={() => handleOrderDispatched(params.row.id)}>Dispatched</Button>
+            <Button onClick={() => handleOrderDelivered(params.row.id)} >Delivered</Button>
             <Button>View</Button>
           </Box>
         )

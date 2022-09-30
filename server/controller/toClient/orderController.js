@@ -116,7 +116,7 @@ const getWeeklyRequest = async (req, res) => {
         $sort: { _id: 1 }
       }
     ])
-    console.log(weeklySales)
+
     res.status(200).json(weeklySales)
   } catch (error) {
     res.status(500).json(error.message)
@@ -137,4 +137,22 @@ const getLastRequest = async (req, res) => {
   }
 }
 
-module.exports = { getRequest, getEarningRequest, getWeeklyRequest, getLastRequest }
+const putRequest = async (req, res) => {
+  try {
+    const updatedOrder = await Order.findByIdAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: req.body
+      },
+      { new: true }
+    )
+    console.log(updatedOrder)
+    res.status(200).json(updatedOrder)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error.message)
+  }
+}
+
+
+module.exports = { getRequest, getEarningRequest, getWeeklyRequest, getLastRequest, putRequest }

@@ -40,47 +40,48 @@ const getProductByIdRequest = async (req, res) => {
 }
 
 const putRequest = async (req, res) => {
-  // if (req.body.imageUpload) {
-  //   const previousImage = await ref(storage, req.body.product.img)
-  //   const deleted = await deleteObject(previousImage)
+  if (req.body.img) {
+    const previousImage = await ref(storage, req.body.product.img)
+    const deleted = await deleteObject(previousImage)
 
-  //   if (deleted) {
-  //     const fileName = await new Date().getTime() + req.body.imageUpload
-  //     const imageRef = await ref(storage, `products/${fileName}`)
-  //     const snapshot = await uploadBytes(imageRef, imageUpload)
-  //     const newImage = await getDownloadURL(snapshot.ref)
+    if (deleted) {
 
-  //     if (newImage) {
-  //       const updatedProduct = await Product.findByIdAndUpdate(
-  //         req.params.id,
-  //         {
-  //           $set: {
-  //             ...req.body.product,
-  //             img: newImage
-  //           }
-  //         },
-  //         { new: true }
-  //       )
-  //       res.status.json(updatedProduct)
-  //     }
-  //   }
-  // } else {
-  try {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      req.params._id,
-      {
-        $set: req.body.product
-      },
-      { new: true }
+      const fileName = new Date().getTime() + req.body.img.name
+      const imageRef = ref(storage, `products/${fileName}`)
+      const snapshot = uploadBytes(imageRef, img)
+      const newImage = getDownloadURL(snapshot.ref)
 
-    )
-    res.status(200).json(updatedProduct)
-  } catch (error) {
-    res.status(500).json(error.message)
+      if (newImage) {
+        const updatedProduct = await Product.findByIdAndUpdate(
+          { _id: req.params.id },
+          {
+            $set: {
+              ...req.body.product,
+              img: newImage
+            }
+          },
+          { new: true }
+        )
+        res.status.json(updatedProduct)
+      }
+    }
+  } else {
+    try {
+      const updatedProduct = await Product.findByIdAndUpdate(
+        { _id: req.params.id },
+        {
+          $set: req.body.product
+        },
+        { new: true }
 
+      )
+      res.status(200).json(updatedProduct)
+    } catch (error) {
+      res.status(500).json(error.message)
+
+    }
   }
 }
-// }
 
 const deleteRequest = async (req, res) => {
 

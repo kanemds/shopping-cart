@@ -63,7 +63,7 @@ export default function EditProduct({ id }) {
 
     // file name console.log(snapshot.ref.name)
     dispatch(editProduct({
-      imageUpload,
+      img: imageUpload,
       product: {
         ...currentProduct,
         name,
