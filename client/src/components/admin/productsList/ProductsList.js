@@ -7,9 +7,6 @@ import { deleteProduct } from '../../../features/productsSlice';
 import EditProduct from '../EditProduct';
 
 
-
-
-
 export default function ProductList() {
 
   const navigate = useNavigate()
@@ -70,7 +67,7 @@ export default function ProductList() {
         return (
           <Box sx={{ display: 'flex' }}>
             <Button onClick={() => navigate(`/product/${params.row.id}`)}>View</Button>
-            <EditProduct />
+            <EditProduct id={params.row.id} />
             <Button onClick={() => handleDelete(params.row.id)}>Delete</Button>
           </Box>
         )

@@ -19,6 +19,7 @@ import Orders from './components/admin/Orders';
 import Product from './components/details/Product'
 import User from './components/details/User'
 import Order from './components/details/Order'
+import EditProduct from './components/admin/EditProduct';
 
 function App() {
   return (
