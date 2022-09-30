@@ -17,9 +17,9 @@ router.use('/edit', edit)
 router.use('/products', allProducts)
 router.use('/stripe', stripe)
 router.use('/user', user)
-router.use('/order', order)
-// client
 
+// client
+router.use('/order', order)
 router.use('/register', register)
 router.use('/login', login)
 router.use('/product', products)

@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import storage from "../../firebase"
-import { createProduct } from '../../features/productsSlice'
+import { editProduct } from '../../features/productsSlice'
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { Box, Button, Typography, TextField, FormControl, InputLabel, InputAdornment, OutlinedInput, CardMedia, Card } from '@mui/material'
 
-export default function EditProduct() {
+export default function EditProduct({ id }) {
 
   const dispatch = useDispatch()
+  const { items } = useSelector(state => state.products)
 
+
+  const [currentProduct, setCurrentProduct] = useState({})
+  const [previewImg, setPreviewImg] = useState("")
   // store the image in state then upload to firebase
   const [image, setImage] = useState(null)
   const [imageUpload, setImageUpload] = useState(null)
@@ -34,9 +38,10 @@ export default function EditProduct() {
       reader.readAsDataURL(file)
       reader.onloadend = () => {
         setImage(reader.result)
+        setPreviewImg(reader.result)
       }
     } else {
-      setImage(null)
+      setPreviewImg(null)
     }
   }
 
@@ -51,22 +56,25 @@ export default function EditProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const fileName = new Date().getTime() + imageUpload.name
-    const imageRef = ref(storage, `products/${fileName}`)
-    uploadBytes(imageRef, imageUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then(url => {
+    // const fileName = new Date().getTime() + imageUpload.name
+    // const imageRef = ref(storage, `products/${fileName}`)
+    // uploadBytes(imageRef, imageUpload).then((snapshot) => {
+    //   getDownloadURL(snapshot.ref).then(url => {
 
-        // file name console.log(snapshot.ref.name)
-        dispatch(createProduct({
-          name,
-          author,
-          desc,
-          price,
-          img: url
-        }))
-      })
+    // file name console.log(snapshot.ref.name)
+    dispatch(editProduct({
+      imageUpload,
+      product: {
+        ...currentProduct,
+        name,
+        author,
+        desc,
+        price
+      }
+    }))
+    // })
 
-    })
+    // })
   }
 
 
@@ -74,6 +82,19 @@ export default function EditProduct() {
 
   const handleClickOpen = () => {
     setOpen(true);
+
+    let selectedProduct = items.filter(item => item._id === id)
+
+    selectedProduct = selectedProduct[0]
+
+
+    setCurrentProduct(selectedProduct)
+    setPreviewImg(selectedProduct.img)
+    setImage("")
+    setName(selectedProduct.name)
+    setAuthor(selectedProduct.author)
+    setDesc(selectedProduct.desc)
+    setPrice(selectedProduct.price)
   };
 
   const handleClose = () => {
@@ -85,7 +106,7 @@ export default function EditProduct() {
       <Button onClick={handleClickOpen}>
         Edit
       </Button>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} fullWidth={true} maxWidth={"lg"} >
         <DialogTitle>Edit Product</DialogTitle>
         <DialogContent>
           <Box>
@@ -124,12 +145,12 @@ export default function EditProduct() {
               </Box>
               <Box sx={{ display: 'flex', ml: 20 }}>
                 <Card >
-                  {image ?
+                  {previewImg ?
                     <CardMedia
                       component="img"
                       height="500"
                       width="400"
-                      image={image}
+                      image={previewImg}
                       alt="Product Image"
                     />
                     :
@@ -140,7 +161,7 @@ export default function EditProduct() {
                 </Card>
               </Box>
             </Box>
-            <Button onClick={handleSubmit}>Create</Button>
+            <Button onClick={handleSubmit}>Update</Button>
           </Box >
         </DialogContent>
         <DialogActions>
