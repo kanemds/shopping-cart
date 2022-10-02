@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { deleteProduct } from '../../../features/productsSlice';
 import EditProduct from '../EditProduct';
 import { useEffect } from 'react';
-import { getAllUsers } from '../../../features/usersSlice';
+import { deleteUser, getAllUsers } from '../../../features/usersSlice';
 
 
 export default function UsersList() {
@@ -23,7 +23,7 @@ export default function UsersList() {
 
 
   const handleDelete = id => {
-    dispatch(deleteProduct(id))
+    dispatch(deleteUser(id))
   }
 
 
@@ -68,7 +68,7 @@ export default function UsersList() {
       renderCell: (params) => {
         return (
           <Box sx={{ display: 'flex' }}>
-            <Button onClick={() => navigate(`/product/${params.row.id}`)}>View</Button>
+            <Button onClick={() => navigate(`/user/${params.row.id}`)}>View</Button>
             <Button onClick={() => handleDelete(params.row.id)}>Delete</Button>
           </Box>
         )
