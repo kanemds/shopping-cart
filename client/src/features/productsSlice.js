@@ -27,6 +27,7 @@ export const getProducts = createAsyncThunk(
 export const createProduct = createAsyncThunk(
   "product/createProduct",
   async (values) => {
+    console.log(values)
     try {
       const response = await axios.post(`${api}/product`, values, setHeaders())
       return response?.data

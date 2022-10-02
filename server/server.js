@@ -3,6 +3,9 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const routes = require('./api/routes')
 const methodOverride = require('method-override')
+const fileUpload = require('express-fileupload')
+const bodyParser = require('body-parser')
+
 
 
 require('dotenv').config()
@@ -28,14 +31,23 @@ mongoose
   )
 
 app.use(cors())
-app.use(express.urlencoded({ limit: '10mb', extended: true }))
+app.use(bodyParser.json({
+  limit: '50mb'
+}));
+
+app.use(bodyParser.urlencoded({
+  limit: '50mb',
+  parameterLimit: 100000,
+  extended: true
+}));
+app.use(express.urlencoded({ limit: '50mb', extended: true }))
 
 // Use JSON parser for all non-webhook routes
 app.use((req, res, next) => {
   if (req.originalUrl === '/stripe/webhook') {
     next();
   } else {
-    // express.json({ limit: '10mb', extended: true });
+    express.json({ limit: '10mb', extended: true });
     express.json()(req, res, next);
   }
 });

@@ -20,8 +20,6 @@ const CreateProduct = () => {
 
 
 
-
-
   // transfer img data and display
   const TransferImageData = file => {
     const reader = new FileReader()
@@ -43,26 +41,39 @@ const CreateProduct = () => {
     TransferImageData(file)
   }
 
+  // firebase
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault()
 
+  //   const fileName = new Date().getTime() + imageUpload.name
+  //   const imageRef = ref(storage, `products/${fileName}`)
+  //   uploadBytes(imageRef, imageUpload).then((snapshot) => {
+  //     getDownloadURL(snapshot.ref).then(url => {
+
+  //       // file name console.log(snapshot.ref.name)
+  //       dispatch(createProduct({
+  //         name,
+  //         author,
+  //         desc,
+  //         price,
+  //         img: url
+  //       }))
+  //     })
+
+  //   })
+  // }
+
+  // cloudinary
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const fileName = new Date().getTime() + imageUpload.name
-    const imageRef = ref(storage, `products/${fileName}`)
-    uploadBytes(imageRef, imageUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then(url => {
-
-        // file name console.log(snapshot.ref.name)
-        dispatch(createProduct({
-          name,
-          author,
-          desc,
-          price,
-          img: url
-        }))
-      })
-
-    })
+    dispatch(createProduct({
+      name,
+      author,
+      desc,
+      price,
+      img: image
+    }))
   }
 
 

@@ -11,6 +11,7 @@ export default function ProductList() {
 
   const navigate = useNavigate()
   const { items } = useSelector(state => state.products)
+  console.log(items)
   const dispatch = useDispatch()
 
   const handleDelete = id => {
@@ -19,13 +20,16 @@ export default function ProductList() {
 
 
   const rows = items && items.map(product => {
+
+    console.log(items)
+
     return {
       id: product._id,
-      image: product.img,
+      image: product.img.url,
       name: product.name,
       author: product.author,
       desc: product.desc,
-      price: product.price.toFixed(2).toLocaleString()
+      price: `$${product.price.toFixed(2).toLocaleString()}`
 
     }
   })
