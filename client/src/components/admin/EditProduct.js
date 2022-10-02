@@ -26,10 +26,6 @@ export default function EditProduct({ id }) {
   const [desc, setDesc] = useState("")
   const [price, setPrice] = useState(0)
 
-  console.log(imageUpload)
-
-
-
 
 
   // transfer img data and display
@@ -58,14 +54,10 @@ export default function EditProduct({ id }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    // const fileName = new Date().getTime() + imageUpload.name
-    // const imageRef = ref(storage, `products/${fileName}`)
-    // uploadBytes(imageRef, imageUpload).then((snapshot) => {
-    //   getDownloadURL(snapshot.ref).then(url => {
+    console.log(image)
 
-    // file name console.log(snapshot.ref.name)
     dispatch(editProduct({
-      img: imageUpload,
+      image,
       product: {
         ...currentProduct,
         name,
@@ -91,7 +83,7 @@ export default function EditProduct({ id }) {
 
 
     setCurrentProduct(selectedProduct)
-    setPreviewImg(selectedProduct.img)
+    setPreviewImg(selectedProduct.img.url)
     setImage("")
     setName(selectedProduct.name)
     setAuthor(selectedProduct.author)
@@ -163,12 +155,11 @@ export default function EditProduct({ id }) {
                 </Card>
               </Box>
             </Box>
-            <Button onClick={handleSubmit}>Update</Button>
           </Box >
         </DialogContent>
         <DialogActions>
+          <Button onClick={handleSubmit}>Update</Button>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
         </DialogActions>
       </Dialog>
     </div>

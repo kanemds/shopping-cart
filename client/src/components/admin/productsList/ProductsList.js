@@ -11,7 +11,7 @@ export default function ProductList() {
 
   const navigate = useNavigate()
   const { items } = useSelector(state => state.products)
-  console.log(items)
+
   const dispatch = useDispatch()
 
   const handleDelete = id => {
@@ -21,7 +21,7 @@ export default function ProductList() {
 
   const rows = items && items.map(product => {
 
-    console.log(items)
+
 
     return {
       id: product._id,

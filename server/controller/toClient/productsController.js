@@ -61,53 +61,55 @@ const getProductByIdRequest = async (req, res) => {
 }
 
 const putRequest = async (req, res) => {
-  // if (req.body.img) {
-  //   const previousImage = await ref(storage, req.body.product.img)
-  //   const deleted = await deleteObject(previousImage)
+  if (req.body.image) {
+    try {
 
-  const img = req.body.img
-  console.log(img)
-  // if (deleted) {
+      const deletedPreImage = await cloudinary.uploader.destroy(
+        req.body.product.img.public_id
+      )
 
-  const fileName = new Date().getTime() + req.body.img.name
-
-  const imageRef = ref(storage, `products/${fileName}`)
-
-  const snapshot = uploadBytes(imageRef, img)
-
-  const newImage = getDownloadURL(snapshot.ref)
-
-  if (newImage) {
-    const updatedProduct = await Product.findByIdAndUpdate(
-      { _id: req.params.id },
-      {
-        $set: {
-          ...req.body.product,
-          img: newImage
+      if (deletedPreImage) {
+        const updatedNewImage = await cloudinary.uploader.upload(
+          req.body.image,
+          {
+            upload_preset: "bookstore"
+          }
+        )
+        if (updatedNewImage) {
+          const updatedProduct = await Product.findByIdAndUpdate(
+            { _id: req.params.id },
+            {
+              $set: {
+                ...req.body.product,
+                img: updatedNewImage
+              }
+            },
+            { new: true }
+          )
+          res.status(200).json(updatedProduct)
         }
-      },
-      { new: true }
-    )
-    res.status.json(updatedProduct)
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(500).json(error.message)
+    }
+  } else {
+    try {
+      const updatedProduct = await Product.findByIdAndUpdate(
+        { _id: req.params.id },
+        {
+          $set: req.body.product
+        },
+        { new: true }
+
+      )
+      res.status(200).json(updatedProduct)
+    } catch (error) {
+      res.status(500).json(error.message)
+
+    }
   }
 }
-// } else {
-//   try {
-//     const updatedProduct = await Product.findByIdAndUpdate(
-//       { _id: req.params.id },
-//       {
-//         $set: req.body.product
-//       },
-//       { new: true }
-
-//     )
-//     res.status(200).json(updatedProduct)
-//   } catch (error) {
-//     res.status(500).json(error.message)
-
-//   }
-// }
-// }
 
 const deleteRequest = async (req, res) => {
 
