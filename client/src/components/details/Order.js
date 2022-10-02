@@ -28,35 +28,52 @@ const Order = () => {
 
   console.log(currentOrder)
 
+  const shipping = currentOrder && currentOrder.shipping
+  const address = shipping && shipping.address
+  // const address = currentOrder.shipping.address
 
   return (
     <>
-      <Paper>
+      {loading ?
         <Box>
-          <Typography>Order Details</Typography>
+          <Typography>Loading...</Typography>
+        </Box> :
 
-          <Typography>
-            Delivery Status: {
-              currentOrder.delivery_status === "pending" ? <Typography>Pending</Typography> :
-                currentOrder.delivery_status === "dispatched" ? <Typography>Dispatched</Typography> :
-                  currentOrder.delivery_status === "delivered" ? <Typography>Delivered</Typography> :
-                    <Typography>System Error</Typography>
+        <Paper>
+          <Box>
+            <Typography>Order Details</Typography>
+            <Typography>
+              Delivery Status: {
+                currentOrder.delivery_status === "pending" ? <Typography>Pending</Typography> :
+                  currentOrder.delivery_status === "dispatched" ? <Typography>Dispatched</Typography> :
+                    currentOrder.delivery_status === "delivered" ? <Typography>Delivered</Typography> :
+                      <Typography>System Error</Typography>
+              }
+            </Typography>
+          </Box>
+          <Box>
+            <Typography>Products need to get from stripe using cart Table</Typography>
+
+          </Box>
+
+          <Box>
+            <Typography>Shipping Details</Typography>
+            <Typography>Customer: {shipping?.name}</Typography>
+            <Typography>Email: {shipping?.email}</Typography>
+            <Typography>Address: {address?.line1}</Typography>
+            {address?.line2 ? (
+              <Typography>Address: {address?.line2}</Typography>) :
+              null
             }
-          </Typography>
-        </Box>
-        <Box>
-          <Typography>Products</Typography>
-        </Box>
-        <Box>
-          <Typography>Total</Typography>
-        </Box>
-        <Box>
-          <Typography>Shipping Details</Typography>
-        </Box>
-      </Paper>
+            <Typography>City: {address?.city}</Typography>
+            <Typography>Province: {address?.state}</Typography>
+            <Typography>Postal Code: {address?.postal_code}</Typography>
+            <Typography>Country: {address?.country}</Typography>
+          </Box>
+        </Paper>
 
 
-
+      }
     </>
   )
 }
