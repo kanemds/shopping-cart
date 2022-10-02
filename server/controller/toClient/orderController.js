@@ -1,5 +1,6 @@
 const Order = require('../../models/order')
 const moment = require('moment')
+const order = require('../../models/order')
 
 const getRequest = async (req, res) => {
 
@@ -137,6 +138,24 @@ const getLastRequest = async (req, res) => {
   }
 }
 
+const getOneRequest = async (req, res) => {
+
+
+  try {
+    const findCurrentOrder = await Order.findById(req.params.id)
+
+
+    if (req.user._id !== findCurrentOrder.userId || !req.user.isAdmin) {
+      return res.status(403).json("Not authorized")
+    }
+
+    res.status(200).json(findCurrentOrder)
+
+  } catch (error) {
+    res.status(500).json(error.message)
+  }
+}
+
 const putRequest = async (req, res) => {
   try {
     const updatedOrder = await Order.findByIdAndUpdate(
@@ -155,4 +174,4 @@ const putRequest = async (req, res) => {
 }
 
 
-module.exports = { getRequest, getEarningRequest, getWeeklyRequest, getLastRequest, putRequest }
+module.exports = { getRequest, getEarningRequest, getWeeklyRequest, getLastRequest, putRequest, getOneRequest }

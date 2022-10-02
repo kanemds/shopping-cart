@@ -4,6 +4,7 @@ import { Box, Card, CardContent, CardMedia, Typography, CardActionArea, Button }
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '../features/cartSlice'
 import { useNavigate } from 'react-router-dom'
+import { api } from '../features/api'
 
 const Home = () => {
 
@@ -25,37 +26,35 @@ const Home = () => {
 
         {data?.map(product => {
 
-          // conver bindata from mongodb image
-          // const blob = new Blob([Int8Array.from(product.img.data.data)], { type: product.img.contentType })
-          // const image = window.URL.createObjectURL(blob);
-
           return (
             < Card key={product._id} sx={{ maxWidth: 345, display: 'flex', m: 2, p: 2 }
             }>
               <Box>
                 <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={product.img.url}
-                    alt={product.name}
-                  />
+                  <Button onClick={() => navigate(`/product/${product._id}`)}>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={product.img.url}
+                      alt={product.name}
+                    />
+                  </Button>
                 </CardActionArea>
               </Box>
               <Box>
-                <CardActionArea>
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {product.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      ${(product.price).toFixed(2)}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {product.desc}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
+
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {product.name}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    ${(product.price).toFixed(2)}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {product.desc}
+                  </Typography>
+                </CardContent>
+
                 <Button onClick={() => handleAddToCart(product)}>Add to Cart</Button>
               </Box>
             </Card>

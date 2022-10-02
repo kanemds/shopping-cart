@@ -16,7 +16,7 @@ const Product = () => {
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
 
-
+  console.log(product.img)
 
   useEffect(() => {
     setLoading(true)
@@ -86,7 +86,7 @@ const Product = () => {
                   component="img"
                   height="500"
                   width="400"
-                  image={product.img}
+                  image={product?.img}
                   alt="Product Image"
                 />
               </Card>
