@@ -39,7 +39,29 @@ const getRequest = async (req, res) => {
   } catch (error) {
     res.status(500).json(error.message)
   }
-
 }
 
-module.exports = { getRequest }
+const getAllRequest = async (req, res) => {
+  try {
+    const allUser = await User.find().sort({ _id: -1 })
+    res.status(200).json(allUser)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error.message)
+  }
+}
+
+const deleteRequest = async (req, res) => {
+  try {
+    const deleteUser = await User.findByIdAndDelete(req.params.id)
+    res.status(200).json(deleteUser)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error.message)
+  }
+}
+
+
+
+
+module.exports = { getRequest, getAllRequest, deleteRequest }
