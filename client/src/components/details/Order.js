@@ -26,7 +26,6 @@ const Order = () => {
     getOrder()
   }, [id])
 
-  console.log(currentOrder)
 
   const shipping = currentOrder && currentOrder.shipping
   const address = shipping && shipping.address
