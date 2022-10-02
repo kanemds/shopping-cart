@@ -1,5 +1,6 @@
 const User = require('../../models/user')
 const moment = require('moment')
+const { findOne } = require('../../models/user')
 
 const getRequest = async (req, res) => {
 
@@ -51,6 +52,21 @@ const getAllRequest = async (req, res) => {
   }
 }
 
+const findOneRequest = async (req, res) => {
+  try {
+    const findOneUser = await User.findById(req.params.id)
+    res.status(200).json({
+      _id: findOneUser._id,
+      name: findOneUser.name,
+      email: findOneUser.email,
+      isAdmin: findOneUser.isAdmin
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error.message)
+  }
+}
+
 const deleteRequest = async (req, res) => {
   try {
     const deleteUser = await User.findByIdAndDelete(req.params.id)
@@ -64,4 +80,4 @@ const deleteRequest = async (req, res) => {
 
 
 
-module.exports = { getRequest, getAllRequest, deleteRequest }
+module.exports = { getRequest, getAllRequest, deleteRequest, findOneRequest }

@@ -25,7 +25,7 @@ export const deleteUser = createAsyncThunk("users/deleteUser", async (id) => {
   } catch (error) {
     console.log(error.message.data)
     toast.error(error.response?.data, {
-
+      position: "bottom-left"
     })
   }
 })
@@ -40,6 +40,20 @@ const usersSlice = createSlice({
     [getAllUsers.fulfilled]: (state, action) => {
       state.lists = action.payload
       state.status = "success"
+    },
+    [getAllUsers.rejected]: (state, action) => {
+      state.status = "rejected"
+    },
+    [deleteUser.pending]: (state, action) => {
+      state.status = "pending"
+    },
+    [deleteUser.fulfilled]: (state, action) => {
+      const newList = state.lists.filter(deleteUser => deleteUser._id !== action.payload._id)
+      state.lists = newList
+      state.deleteStatus = "success"
+      toast.error("User Deleted", {
+        position: "bottom-left"
+      })
     },
     [getAllUsers.rejected]: (state, action) => {
       state.status = "rejected"
