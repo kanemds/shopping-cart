@@ -26,6 +26,8 @@ export default function EditProduct({ id }) {
   const [desc, setDesc] = useState("")
   const [price, setPrice] = useState(0)
 
+  console.log(imageUpload)
+
 
 
 

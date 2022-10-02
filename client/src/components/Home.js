@@ -37,7 +37,7 @@ const Home = () => {
                   <CardMedia
                     component="img"
                     height="140"
-                    image={product.img}
+                    image={product.img.url}
                     alt={product.name}
                   />
                 </CardActionArea>
